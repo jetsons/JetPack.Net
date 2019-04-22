@@ -28,6 +28,16 @@ namespace Jetsons.JetPack {
 
 			return sb.ToString();
 		}
+		/// <summary>
+		/// Sorts the strings by their length
+		/// </summary>
+		public static List<string> SortByLength(this IList<string> values, bool shortestFirst = true) {
+			if (shortestFirst) {
+				return (from s in values orderby s.Length ascending select s).ToList<string>();
+			} else {
+				return (from s in values orderby s.Length descending select s).ToList<string>();
+			}
+		}
 
 	}
 }

@@ -1,6 +1,6 @@
 # JetPack
 
-### Types
+### Extensions
 
 Extension methods for Strings:
 
@@ -17,7 +17,7 @@ Extension methods for Strings:
 - **BeforeLast**
 - **After**
 - **AfterFirst**
-- **AfterList**
+- **AfterLast**
 - **BeforeIndex**
 - **AfterIndex**
 - **SmartSplit**

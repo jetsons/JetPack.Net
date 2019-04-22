@@ -742,6 +742,30 @@ namespace Jetsons.JetPack {
 		public static bool IsSingleline(this string text) {
 			return !text.Contains('\n');
 		}
+		/// <summary>
+		/// Uppercase the first letter in this string, preserving the case of all the other letters
+		/// </summary>
+		public static string FirstLetterUppercase(this string word) {
+			if (word.Length == 0) {
+				return word;
+			}
+			if (word.Length == 1) {
+				return word.ToUpper();
+			}
+			return char.ToUpper(word[0]) + word.Substring(1);
+		}
+		/// <summary>
+		/// Lowercase the first letter in this string, preserving the case of all the other letters
+		/// </summary>
+		public static string FirstLetterLowercase(this string word) {
+			if (word.Length == 0) {
+				return word;
+			}
+			if (word.Length == 1) {
+				return word.ToLower();
+			}
+			return char.ToLower(word[0]) + word.Substring(1);
+		}
 	}
 
 	/// <summary>
