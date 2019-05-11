@@ -143,7 +143,7 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Converts the given IList to a typed List
 		/// </summary>
-		public static List<T> ToList<T>(this IList array) {
+		public static List<T> ToList<T>(this IEnumerable array) {
 			if (array == null) {
 				return null;
 			}
@@ -166,20 +166,7 @@ namespace Jetsons.JetPack {
 			}
 			return list;
 		}
-
-		/// <summary>
-		/// Converts the given list to an array
-		/// </summary>
-		public static T[] ToArray<T>(this IList array) {
-			T[] list = new T[array.Count];
-			int i = 0;
-			foreach (T obj in array) {
-				list[i] = obj;
-				i++;
-			}
-			return list;
-		}
-
+		
 		/// <summary>
 		/// Converts the given list to an array
 		/// </summary>
@@ -316,6 +303,44 @@ namespace Jetsons.JetPack {
 			var last = list[i];
 			list.RemoveAt(i);
 			return last;
+		}
+
+		/// <summary>
+		/// Removes the last item from the list and returns it.
+		/// </summary>
+		/// <param name="list">The list to clone. Not modified. Can be null.</param>
+		/// <returns></returns>
+		public static List<T> ShallowClone<T>(this IList<T> list) {
+			if (list == null) {
+				return null;
+			}
+			var newList = new List<T>();
+			for (int i = 0; i < list.Count; i++) {
+				newList.Add(list[i]);
+			}
+			return newList;
+		}
+
+		/// <summary>
+		/// Add the given item into the list and return the list.
+		/// </summary>
+		/// <param name="list">The list. Cannot be null.</param>
+		/// <param name="item">The item to add.</param>
+		/// <returns></returns>
+		public static List<T> AddAndReturn<T>(this List<T> list, T item) {
+			list.Add(item);
+			return list;
+		}
+
+		/// <summary>
+		/// Remove the given item from the list and return the list.
+		/// </summary>
+		/// <param name="list">The list. Cannot be null.</param>
+		/// <param name="item">The item to remove.</param>
+		/// <returns></returns>
+		public static List<T> RemoveAndReturn<T>(this List<T> list, T item) {
+			list.Remove(item);
+			return list;
 		}
 
 	}

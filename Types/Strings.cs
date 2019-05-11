@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Jetsons.JetPack {
@@ -486,6 +487,33 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
+		/// Ensures that the string begins with the given prefix. If the prefix is already present, no changes are done.
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="prefix">Prefix to add</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static string Prefix(this string text, string prefix, bool caseSensitive = true) {
+			if (!text.BeginsWith(prefix, caseSensitive)) {
+				return prefix + text;
+			}
+			return text;
+		}
+		/// <summary>
+		/// Ensures that the string ends with the given postfix. If the postfix is already present, no changes are done.
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="postfix">Postfix to add</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static string Postfix(this string text, string postfix, bool caseSensitive = true) {
+			if (!text.EndsWith(postfix, caseSensitive)) {
+				return text + postfix;
+			}
+			return text;
+		}
+
+		/// <summary>
 		/// Returns true if the string is equal to the search term using case-insensitive comparison
 		/// </summary>
 		/// <param name="text">String to check</param>
@@ -766,6 +794,31 @@ namespace Jetsons.JetPack {
 			}
 			return char.ToLower(word[0]) + word.Substring(1);
 		}
+
+		/// <summary>
+		/// Eliminates all multiple-whitespace (newlines, tabs, multiple spaces) and joins this string to a single line.
+		/// </summary>
+		public static string SingleLine(this string text) {
+			return Regex.Replace(text, @"\s+", " ").Trim();
+		}
+
+		/// <summary>
+		/// Replaces all multiple-whitespace with single spaces.
+		/// </summary>
+		public static string RemoveMultipleSpaces(this string text) {
+			return new Regex("[ ]{2,}", RegexOptions.None).Replace(text, " ");
+		}
+
+		/// <summary>
+		/// Ensure the given string is at most X characters long.
+		/// </summary>
+		public static string Truncate(this string text, int maxLen) {
+			if (text.Length < maxLen) {
+				return text;
+			}
+			return text.Substring(0, maxLen);
+		}
+
 	}
 
 	/// <summary>

@@ -39,5 +39,200 @@ namespace Jetsons.JetPack {
 			}
 		}
 
+
+		/// <summary>
+		/// Checks if the string equals any given term, and returns a results struct. Never returns null.
+		/// </summary>
+		/// <param name="data">List of strings to check</param>
+		/// <param name="terms">Search terms</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static SearchResult3 EqualsAny(this IList<string> data, List<string> terms, bool caseSensitive = true) {
+			var opts = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+			int t = 0;
+			int d = 0;
+			foreach (string text in data) {
+				int len = text.Length;
+				foreach (string term in terms) {
+					if (len == term.Length) {
+						if (text.Equals(term, opts)) {
+							return new SearchResult3 {
+								Found = true,
+								Term = term,
+								TermIndex = t,
+								CharIndex = 0,
+								Data = text,
+								DataIndex = d
+							};
+						}
+					}
+					t++;
+				}
+				d++;
+			}
+			return new SearchResult3 {
+				Found = false,
+				TermIndex = -1,
+				CharIndex = -1,
+				DataIndex = -1
+			};
+		}
+
+		/// <summary>
+		/// Checks if the string contains any given term, and returns a results struct. Never returns null.
+		/// </summary>
+		/// <param name="data">List of strings to check</param>
+		/// <param name="terms">Search terms</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static SearchResult3 ContainsAny(this IList<string> data, List<string> terms, bool caseSensitive = true) {
+			var opts = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+			int t = 0;
+			int d = 0;
+			foreach (string text in data) {
+				int len = text.Length;
+				foreach (string term in terms) {
+					if (len >= term.Length) {
+						var i = text.IndexOf(term, opts);
+						if (i > -1) {
+							return new SearchResult3 {
+								Found = true,
+								Term = term,
+								TermIndex = t,
+								CharIndex = i,
+								Data = text,
+								DataIndex = d
+							};
+						}
+					}
+					t++;
+				}
+				d++;
+			}
+			return new SearchResult3 {
+				Found = false,
+				TermIndex = -1,
+				CharIndex = -1,
+				DataIndex = -1
+			};
+		}
+
+		/// <summary>
+		/// Checks if the string contains any given term, and returns a results struct. Never returns null.
+		/// </summary>
+		/// <param name="data">List of strings to check</param>
+		/// <param name="terms">Search terms</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static SearchResult3 IndexOfAny(this IList<string> data, List<string> terms, bool caseSensitive = true) {
+			return data.ContainsAny(terms);
+		}
+
+		/// <summary>
+		/// Checks if the string begins with any given term, and returns a results struct. Never returns null.
+		/// </summary>
+		/// <param name="data">List of strings to check</param>
+		/// <param name="terms">Search terms</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static SearchResult3 BeginsWithAny(this IList<string> data, List<string> terms, bool caseSensitive = true) {
+			int t = 0;
+			int d = 0;
+			foreach (string text in data) {
+				int len = text.Length;
+				foreach (string term in terms) {
+					if (len >= term.Length) {
+						if (text.BeginsWith(term, caseSensitive)) {
+							return new SearchResult3 {
+								Found = true,
+								Term = term,
+								TermIndex = t,
+								CharIndex = 0,
+								Data = text,
+								DataIndex = d
+							};
+						}
+					}
+					t++;
+				}
+				d++;
+			}
+			return new SearchResult3 {
+				Found = false,
+				TermIndex = -1,
+				CharIndex = -1,
+				DataIndex = -1
+			};
+		}
+
+		/// <summary>
+		/// Checks if the string ends with any given term, and returns a results struct. Never returns null.
+		/// </summary>
+		/// <param name="data">List of strings to check</param>
+		/// <param name="terms">Search terms</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static SearchResult3 EndsWithAny(this IList<string> data, List<string> terms, bool caseSensitive = true) {
+			int t = 0;
+			int d = 0;
+			foreach (string text in data) {
+				int len = text.Length;
+				foreach (string term in terms) {
+					if (len >= term.Length) {
+						if (text.EndsWith(term, caseSensitive)) {
+							return new SearchResult3 {
+								Found = true,
+								Term = term,
+								TermIndex = t,
+								CharIndex = len - term.Length,
+								Data = text,
+								DataIndex = d
+							};
+						}
+					}
+					t++;
+				}
+				d++;
+			}
+			return new SearchResult3 {
+				Found = false,
+				TermIndex = -1,
+				CharIndex = -1,
+				DataIndex = -1
+			};
+		}
+
+
 	}
+
+	/// <summary>
+	/// Results of a search in a list of strings
+	/// </summary>
+	public struct SearchResult3 {
+		/// <summary>
+		/// any term found?
+		/// </summary>
+		public bool Found;
+		/// <summary>
+		/// which term was found?
+		/// </summary>
+		public string Term;
+		/// <summary>
+		/// what was the index of the term found within the list of terms given?
+		/// </summary>}
+		public int TermIndex;
+		/// <summary>
+		/// what char index did the IndexOf() call return?
+		/// </summary>
+		public int CharIndex;
+		/// <summary>
+		/// what was the index of the data in the list that matched the term?
+		/// </summary>
+		public int DataIndex;
+		/// <summary>
+		/// what was the data in the list that matched the term?
+		/// </summary>
+		public string Data;
+	}
+
 }
