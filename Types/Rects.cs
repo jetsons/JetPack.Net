@@ -22,8 +22,12 @@ namespace Jetsons.JetPack {
 		/// </summary>
 		public static Rectangle ResizeToFitSize(this Rectangle original, int maxWidth, int maxHeight, bool tightFit = true) {
 
-			if (maxWidth <= 0 && maxHeight <= 0) throw new ArgumentException("At least one scale factor (toWidth or toHeight) must not be null.");
-			if (original.Height <= 0 || original.Width <= 0) throw new ArgumentException("Cannot scale size from zero.");
+			if (maxWidth <= 0 && maxHeight <= 0) {
+				throw new ArgumentException("At least one scale factor (maxWidth or maxHeight) must be non-zero.");
+			}
+			if (original.Height <= 0 || original.Width <= 0) {
+				return new Rectangle(0, 0, 0, 0);
+			}
 
 			double widthScale = 0;
 			double heightScale = 0;
@@ -39,9 +43,9 @@ namespace Jetsons.JetPack {
 			}
 			if (maxWidth > 0 && maxHeight > 0) {
 				if (tightFit) {
-					scale = Math.Min((double)widthScale, (double)heightScale);
-				} else {
 					scale = Math.Max((double)widthScale, (double)heightScale);
+				} else {
+					scale = Math.Min((double)widthScale, (double)heightScale);
 				}
 			}
 
