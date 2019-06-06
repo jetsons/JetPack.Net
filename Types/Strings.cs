@@ -819,6 +819,79 @@ namespace Jetsons.JetPack {
 			return text.Substring(0, maxLen);
 		}
 
+		/// <summary>
+		/// Counts the number of times that the term is found at the beginning of the tring.
+		/// </summary>
+		public static int CountPrefix(this string text, string term) {
+			if (text.Length < term.Length) {
+				return 0;
+			}
+			var times = 0;
+			var max = (text.Length - term.Length);
+			for (int i = 0; i < max; i += term.Length) {
+				if (text.Substring(i, term.Length) == term) {
+					times++;
+				} else {
+					break;
+				}
+			}
+			return times;
+		}
+
+		/// <summary>
+		/// Counts the number of times that the term is found at the end of the tring.
+		/// </summary>
+		public static int CountPostfix(this string text, string term) {
+			if (text.Length < term.Length) {
+				return 0;
+			}
+			var times = 0;
+			var max = (text.Length - term.Length);
+			for (int i = max; i >= 0; i -= term.Length) {
+				if (text.Substring(i, term.Length) == term) {
+					times++;
+				} else {
+					break;
+				}
+			}
+			return times;
+		}
+
+		/// <summary>
+		/// Removes all special characters from the string, except the given allowances.
+		/// Only letters and digits are allowed by default.
+		/// </summary>
+		public static string RemoveSymbols(this string text, List<char> allowChars = null) {
+			var sb = new StringBuilder();
+			foreach (char c in text) {
+				if (c.IsLetter() || c.IsNumber() || (allowChars != null && allowChars.Contains(c))) {
+					sb.Append(c);
+				}
+			}
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Creates a web-safe version of this string optimized for filenames.
+		/// Replaces all special characters with dash, or underscore, per the replaceChar parameter.
+		/// </summary>
+		public static string WebSafeFilename(this string text, char replaceChar = '-') {
+			var sb = new StringBuilder();
+			var lastIsRC = false;
+			foreach (char c in text) {
+				if (c.IsLetter() || c.IsNumber()) {
+					sb.Append(c);
+					lastIsRC = false;
+				} else {
+					if (!lastIsRC) {
+						lastIsRC = true;
+						sb.Append(replaceChar);
+					}
+				}
+			}
+			return sb.ToString().RemovePostfix(replaceChar.ToString());
+		}
+
 	}
 
 	/// <summary>

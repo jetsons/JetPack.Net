@@ -29,6 +29,18 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
+		/// Sets the value of the slot, adding nulls to end of the list if the slot is beyond the end of the list.
+		/// </summary>
+		public static void Set<T>(this List<T> list, int slot, T value) {
+			if (slot >= 0) {
+				while (list.Count <= slot) {
+					list.Add(default(T));
+				}
+				list[slot] = value;
+			}
+		}
+		
+		/// <summary>
 		/// Returns true if the list contains the given slot index
 		/// </summary>
 		public static bool HasSlot<T>(this List<T> list, int slot) {
