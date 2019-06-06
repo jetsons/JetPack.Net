@@ -282,5 +282,42 @@ namespace Jetsons.JetPack
 			folder.DeleteFolder();
 			folder.EnsureFolderExists();
 		}
+
+		/// <summary>
+		/// Returns the file size in bytes.
+		/// </summary>
+		/// <returns></returns>
+		public static long FileSize(this string path) {
+			var info = new System.IO.FileInfo(path);
+			if (info == null) {
+				return 0;
+			}
+			return info.Length;
+		}
+
+		/// <summary>
+		/// Returns the file created date.
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime FileCreatedDate(this string path, bool UTC = false) {
+			var info = new System.IO.FileInfo(path);
+			if (info == null) {
+				return DateTime.MinValue;
+			}
+			return UTC ? info.CreationTimeUtc : info.CreationTime;
+		}
+
+		/// <summary>
+		/// Returns the file modified date.
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime FileModifiedDate(this string path, bool UTC = false) {
+			var info = new System.IO.FileInfo(path);
+			if (info == null) {
+				return DateTime.MinValue;
+			}
+			return UTC ? info.LastWriteTimeUtc : info.LastWriteTime;
+		}
+
 	}
 }
