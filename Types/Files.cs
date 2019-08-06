@@ -319,5 +319,69 @@ namespace Jetsons.JetPack
 			return UTC ? info.LastWriteTimeUtc : info.LastWriteTime;
 		}
 
+		/// <summary>
+		/// Gets a list of the files in a given directory, filtering by the file extension and optionally by a wildcard filter.
+		/// Returns a list of absolute file paths.
+		/// </summary>
+		public static List<string> GetFilesInDirectory(this string folderPath, string extension = null, bool recursive = true, string nameFilter = "**") {
+			
+			// get a directory listing, with a filter and recursive/non-recursive
+			var opts = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+			var rawDirListing = new DirectoryInfo(folderPath).GetFiles(nameFilter, opts);
+
+			// filter by extension if wanted
+			var results = new List<string>();
+			if (rawDirListing != null) {
+				foreach (var listItem in rawDirListing) {
+					var path = listItem.FullName;
+					if (extension == null || path.Extension() == extension) {
+						results.Add(path);
+					}
+				}
+			}
+			return results;
+		}
+		/// <summary>
+		/// Gets a list of the files in a given directory, filtering by multiple extensions and optionally by a wildcard filter.
+		/// Returns a list of absolute file paths.
+		/// </summary>
+		public static List<string> GetFilesInDirectory(this string folderPath, List<string> extensions, bool recursive = true, string nameFilter = "**") {
+
+			// get a directory listing, with a filter and recursive/non-recursive
+			var opts = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+			var rawDirListing = new DirectoryInfo(folderPath).GetFiles(nameFilter, opts);
+
+			// filter by extension if wanted
+			var results = new List<string>();
+			if (rawDirListing != null) {
+				foreach (var listItem in rawDirListing) {
+					var path = listItem.FullName;
+					if (path.Extension().IsAny(extensions)) {
+						results.Add(path);
+					}
+				}
+			}
+			return results;
+		}
+		/// <summary>
+		/// Gets a list of the directories in a given directory.
+		/// Returns a list of absolute paths.
+		/// </summary>
+		public static List<string> GetDirectoriesInDirectory(this string folderPath, bool recursive = true, string nameFilter = "**") {
+
+			// get a directory listing, with a filter and recursive/non-recursive
+			var opts = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+			var rawDirListing = new DirectoryInfo(folderPath).GetDirectories(nameFilter, opts);
+
+			// filter by extension if wanted
+			var results = new List<string>();
+			if (rawDirListing != null) {
+				foreach (var listItem in rawDirListing) {
+					var path = listItem.FullName;
+					results.Add(path);
+				}
+			}
+			return results;
+		}
 	}
 }
