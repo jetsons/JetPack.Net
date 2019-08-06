@@ -285,8 +285,20 @@ namespace Jetsons.JetPack {
 		public static List<string> SmartSplit(this string text, string seperator, bool deleteBlanks = false, bool trimValues = false) {
 
 			// split by seperator, delete blanks
-			var options = deleteBlanks ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None;
-			List<string> list = new List<string>(text.Split(new string[] { seperator }, options));
+			var options = deleteBlanks && !trimValues ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None;
+			var list = new List<string>(text.Split(new string[] { seperator }, options));
+
+			// special algo to trim and delete blanks (need to trim first)
+			if (trimValues && deleteBlanks) {
+				var results = new List<string>();
+				foreach (var item in list) {
+					var item2 = item.Trim();
+					if (item2.Length > 0) {
+						results.Add(item2);
+					}
+				}
+				return results;
+			}
 
 			// trim if wanted
 			if (trimValues) {
