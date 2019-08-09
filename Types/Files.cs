@@ -228,6 +228,16 @@ namespace Jetsons.JetPack
 		public static bool FileExists(this string file) {
 			return file.Exists() && System.IO.File.Exists(file);
 		}
+		/// <summary>
+		/// Deletes a file while supressing any exceptions.
+		/// </summary>
+		public static void DeleteFile(this string file) {
+			try {
+				File.Delete(file);
+			}
+			catch (Exception ex) {
+			}
+		}
 
 		/// <summary>
 		/// Returns true if the given folder exists
