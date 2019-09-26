@@ -330,68 +330,161 @@ namespace Jetsons.JetPack
 		}
 
 		/// <summary>
-		/// Gets a list of the files in a given directory, filtering by the file extension and optionally by a wildcard filter.
-		/// Returns a list of absolute file paths.
-		/// </summary>
-		public static List<string> GetFilesInDirectory(this string folderPath, string extension = null, bool recursive = true, string nameFilter = "**") {
-			
-			// get a directory listing, with a filter and recursive/non-recursive
-			var opts = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-			var rawDirListing = new DirectoryInfo(folderPath).GetFiles(nameFilter, opts);
-
-			// filter by extension if wanted
-			var results = new List<string>();
-			if (rawDirListing != null) {
-				foreach (var listItem in rawDirListing) {
-					var path = listItem.FullName;
-					if (extension == null || path.Extension() == extension) {
-						results.Add(path);
-					}
-				}
-			}
-			return results;
-		}
-		/// <summary>
-		/// Gets a list of the files in a given directory, filtering by multiple extensions and optionally by a wildcard filter.
-		/// Returns a list of absolute file paths.
-		/// </summary>
-		public static List<string> GetFilesInDirectory(this string folderPath, List<string> extensions, bool recursive = true, string nameFilter = "**") {
-
-			// get a directory listing, with a filter and recursive/non-recursive
-			var opts = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-			var rawDirListing = new DirectoryInfo(folderPath).GetFiles(nameFilter, opts);
-
-			// filter by extension if wanted
-			var results = new List<string>();
-			if (rawDirListing != null) {
-				foreach (var listItem in rawDirListing) {
-					var path = listItem.FullName;
-					if (path.Extension().IsAny(extensions)) {
-						results.Add(path);
-					}
-				}
-			}
-			return results;
-		}
-		/// <summary>
-		/// Gets a list of the directories in a given directory.
+		/// Gets a list of the files in a given directory, filtering by file extensions and optionally by a wildcard filter.
+		/// Entirely skips the directories marked for exclusion.
 		/// Returns a list of absolute paths.
 		/// </summary>
-		public static List<string> GetDirectoriesInDirectory(this string folderPath, bool recursive = true, string nameFilter = "**") {
+		/// <param name="folderPath">The directory path to look inside</param>
+		/// <param name="recursive">Recurse into child directories?</param>
+		/// <param name="extension">Only return files of a given extension?</param>
+		/// <param name="filter">Only return directories with the given name. Wildcards are supported.</param>
+		/// <param name="excludeDirNames">Do not recurse into directories with the given names, useful for skipping system directories.</param>
+		/// <returns></returns>
+		public static List<string> GetFilesInDirectory(this string folderPath, string extension = null, bool recursive = true, string filter = null, List<string> excludeDirNames = null) {
+			return GetFilesInDirectory(folderPath, new List<string> { extension }, recursive, filter, excludeDirNames);
+		}
 
-			// get a directory listing, with a filter and recursive/non-recursive
-			var opts = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-			var rawDirListing = new DirectoryInfo(folderPath).GetDirectories(nameFilter, opts);
+		/// <summary>
+		/// Gets a list of the files in a given directory, filtering by multiple extensions and optionally by a wildcard filter.
+		/// Entirely skips the directories marked for exclusion.
+		/// Returns a list of absolute paths.
+		/// </summary>
+		/// <param name="folderPath">The directory path to look inside</param>
+		/// <param name="recursive">Recurse into child directories?</param>
+		/// <param name="extensions">Only return files of a given extension?</param>
+		/// <param name="filter">Only return directories with the given name. Wildcards are supported.</param>
+		/// <param name="excludeDirNames">Do not recurse into directories with the given names, useful for skipping system directories.</param>
+		/// <returns></returns>
+		public static List<string> GetFilesInDirectory(this string folderPath, List<string> extensions = null, bool recursive = true, string filter = null, List<string> excludeDirNames = null) {
 
-			// filter by extension if wanted
+			//------------------------------------------------------------------------------------------
+			// WARNING!
+			//------------------------------------------------------------------------------------------
+			// We do not use the .NET inbuilt recursive function because it is unsafe,
+			// ie it does not provide the ability to skip system directories like "node_modules"
+			// and crashes if you attempt to recursively list files in an NPM-managed repo
+			//------------------------------------------------------------------------------------------
+
+			// get a file listing, safely going folder by folder
 			var results = new List<string>();
-			if (rawDirListing != null) {
-				foreach (var listItem in rawDirListing) {
-					var path = listItem.FullName;
-					results.Add(path);
-				}
-			}
+			GetFilesLoop(results, folderPath, extensions, recursive, filter, excludeDirNames);
 			return results;
 		}
+
+		private static void GetFilesLoop(List<string> results, string folderPath, List<string> extensions, bool recursive, string filter, List<string> excludeDirNames = null) {
+
+			// FILES LOOP
+			// get a file listing with a filter, and ONLY list files directly under this directory (non recursive)
+			var filtering = filter.Exists();
+			var matchedDirs = filtering ? Directory.GetFiles(folderPath, filter) : Directory.GetFiles(folderPath);
+			if (matchedDirs != null) {
+				foreach (var path in matchedDirs) {
+					
+					// add only if the extension matches
+					if (extensions == null || path.Extension().IsAny(extensions)) {
+
+						// add only the filtered dirs
+						results.Add(path);
+					}
+				}
+			}
+
+			// DIRECTORY RECURSION LOOP
+			// get a directory listing ONLY of the subdirs directly under this directory
+			if (recursive) {
+				var dirs = Directory.GetDirectories(folderPath);
+				if (dirs != null) {
+					foreach (var path in dirs) {
+
+						// DO NOT recurse into excluded dirs!
+						if (excludeDirNames == null || !path.Filename().IsAny(excludeDirNames)) {
+							
+							// recurse into child directories
+							GetFilesLoop(results, path, extensions, recursive, filter, excludeDirNames);
+
+						}
+					}
+				}
+			}
+
+		}
+
+
+		/// <summary>
+		/// Gets a list of the directories in a given directory, optionally filtering by a wildcard filter.
+		/// Entirely skips the directories marked for exclusion.
+		/// Returns a list of absolute paths.
+		/// </summary>
+		/// <param name="folderPath">The directory path to look inside</param>
+		/// <param name="recursive">Recurse into child directories?</param>
+		/// <param name="filter">Only return directories with the given name. Wildcards are supported.</param>
+		/// <param name="excludeDirNames">Do not recurse into directories with the given names, useful for skipping system directories.</param>
+		/// <returns></returns>
+		public static List<string> GetDirectoriesInDirectory(this string folderPath, bool recursive = true, string filter = "**", List<string> excludeDirNames = null) {
+
+			//------------------------------------------------------------------------------------------
+			// WARNING!
+			//------------------------------------------------------------------------------------------
+			// We do not use the .NET inbuilt recursive function because it is unsafe,
+			// ie it does not provide the ability to skip system directories like "node_modules"
+			// and crashes if you attempt to recursively list directories in an NPM-managed repo
+			//------------------------------------------------------------------------------------------
+
+			// get a directory listing, safely going folder by folder
+			var results = new List<string>();
+			GetDirectoriesLoop(results, folderPath, recursive, filter, excludeDirNames);
+			return results;
+		}
+		
+		private static void GetDirectoriesLoop(List<string> results, string folderPath, bool recursive, string filter, List<string> excludeDirNames = null) {
+
+			// FILTERING LOOP
+			// get a directory listing with a filter, and ONLY list dirs directly under this directory (non recursive)
+			var filtering = filter.Exists();
+			var matchedDirs = filtering ? Directory.GetDirectories(folderPath, filter) : null;
+			if (matchedDirs != null) {
+				foreach (var path in matchedDirs) {
+
+					// add only if not excluded
+					if (excludeDirNames == null || !path.Filename().IsAny(excludeDirNames)) {
+
+						// add only the filtered dirs
+						results.Add(path);
+					}
+				}
+			}
+
+			// RECURSION LOOP
+			// get a directory listing ONLY of the subdirs directly under this directory..
+			// if not already found before by the above loop
+			if (recursive || !filtering) {
+				var dirs = Directory.GetDirectories(folderPath);
+				if (dirs != null) {
+					foreach (var path in dirs) {
+						
+						// DO NOT recurse into excluded dirs!
+						if (excludeDirNames == null || !path.Filename().IsAny(excludeDirNames)) {
+
+							// add this dir if not added by the filtering loop
+							if (!filtering) {
+
+								// add
+								results.Add(path);
+							}
+
+							// recurse into child directories
+							if (recursive) {
+								GetDirectoriesLoop(results, path, recursive, filter, excludeDirNames);
+							}
+
+						}
+					}
+				}
+			}
+
+		}
+
+
+
 	}
 }
