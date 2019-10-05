@@ -1,4 +1,10 @@
-# JetPack
+# Jetpack.Net
+
+To use this simply grab our Nuget package Jetpack.Net and add this to the top of your class:
+
+    using Jetsons.JetPack;
+	
+This statement unlocks all the extension methods below. Enjoy!
 
 ### Extensions
 
