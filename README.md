@@ -57,6 +57,7 @@ Extension methods for Strings:
 - string.**FirstLetterLowercase**
 - string.**SingleLine**
 - string.**RemoveMultipleSpaces**
+- string.**RemoveMultipleNewlines**
 - string.**Truncate**
 - string.**CountPrefix**
 - string.**CountPostfix**
@@ -81,6 +82,9 @@ Extension methods for manipulating file path Strings:
 - string.**FilenameAndExt**
 - string.**Filename**
 - string.**Extension**
+- string.**SetFilenameAndExt**
+- string.**SetFilename**
+- string.**SetExtension**
 - string.**ParentFolder**
 - string.**AddPath**
 
@@ -103,6 +107,9 @@ Extension methods for file I/O performed using file path Strings:
 - string.**FileModifiedDate**
 - string.**GetFilesInDirectory**
 - string.**GetDirectoriesInDirectory**
+- string.**OpenFileInDefaultApp**
+- string.**OpenFolderInExplorer**
+- string.**OpenFileInExplorer**
 
 Extension methods for URL Strings:
 
@@ -110,7 +117,7 @@ Extension methods for URL Strings:
 
 Extension methods for Streams:
 
-- **ToBytes**
+- stream.**ToBytes**
 
 Extension methods for Dictionaries & ExpandoObjects:
 
@@ -122,7 +129,6 @@ Extension methods for Dictionaries & ExpandoObjects:
 Extension methods for Objects using Reflection:
 
 - any.**GetPropValue**
-- any.**GetPropValue<T>**
 - any.**SetPropValue**
 
 Extension methods for Lists:
@@ -164,6 +170,10 @@ Extension methods for Colors:
 - int.**ToColor**
 - color.**ToInt**
 
+Extension methods for RichTextBoxes:
+
+- rtf.**HighlightAll**
+
 ### Static Classes
 
 .NET applications:
@@ -195,6 +205,11 @@ Message box utilities:
 - **Messages.Info**
 - **Messages.Error**
 - **Messages.Question**
+
+Background worker dialogs:
+
+- **BackgroundTasks.ShowStatusDialog**
+- **BackgroundTasks.ShowRunnerDialog**
 
 ### Dynamic Classes
 
