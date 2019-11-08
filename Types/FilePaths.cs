@@ -17,7 +17,20 @@ namespace Jetsons.JetPack {
 		/// <param name="path">File or folder path</param>
 		/// <returns></returns>
 		public static bool IsPathValid(this string path) {
-			return path.Exists() && path.Length > 4 && path[0].IsLetter() && path[1] == ':' && path[2] == PathSeperator;
+			if (path.Exists() && path.Length > 4) {
+
+				// check if local path
+				if (path[0].IsLetter() && path[1] == ':' && path[2] == PathSeperator) {
+					return true;
+				}
+
+				// check if network path
+				if (path[0] == '\\' && path[1] == '\\' && path[2].IsLetter()) {
+					return true;
+				}
+
+			}
+			return false;
 		}
 		/// <summary>
 		/// Returns true if the given path ends with a slash/backslash
@@ -117,8 +130,89 @@ namespace Jetsons.JetPack {
 		/// <param name="path">File or folder path</param>
 		/// <param name="fileOrFolder">File or folder name to add</param>
 		public static string AddPath(this string path, string fileOrFolder) {
-			return Path.Combine(path, fileOrFolder);
+			
+			// fast mode if there is exactly one slash between path & file
+			var pathHasSep = path.EndsWith(PathSeperator);
+			var fileHasSep = fileOrFolder.BeginsWith(PathSeperator);
+			if ((pathHasSep && !fileHasSep) || (!pathHasSep && fileHasSep)) {
+				return path + fileOrFolder;
+			}
+
+			// slow mode if slashes need to be fixed
+			if (pathHasSep && fileHasSep) {
+				return path + fileOrFolder.Substring(1);
+			}
+			if (!pathHasSep && !fileHasSep) {
+				return path + PathSeperator + fileOrFolder;
+			}
+
+			// nothing
+			return null;
 		}
-		
+
+
+
+		/// <summary>
+		/// Modifies only the filename and extension of the given a file path, and returns the complete path.
+		/// </summary>
+		/// <param name="path">File path</param>
+		/// <param name="filenameAndExt">Value to set as the new filename and extension</param>
+		/// <returns></returns>
+		public static string SetFilenameAndExt(this string path, string filenameAndExt) {
+
+			// exit if invalid path
+			if (!path.IsPathValid()) {
+				return path;
+			}
+
+			// exit if folder path
+			if (path.EndsWith(PathSeperator)) {
+				return path;
+			}
+
+			// make the new path
+			string prefix = path.BeforeLast(PathSeperator.ToString(), false);
+			return prefix == "" ? path : prefix + PathSeperator + filenameAndExt;
+		}
+		/// <summary>
+		/// Modifies only the filename of the given a file path, and returns the complete path.
+		/// </summary>
+		/// <param name="path">File path</param>
+		/// <param name="filename">Value to set as the new filename</param>
+		/// <returns></returns>
+		public static string SetFilename(this string path, string filename) {
+
+			// exit if invalid path
+			if (!path.IsPathValid()) {
+				return path;
+			}
+
+			// exit if folder path
+			if (path.EndsWith(PathSeperator)) {
+				return path;
+			}
+
+			// make the new path
+			string prefix = path.BeforeLast(PathSeperator.ToString(), false);
+			return prefix == "" ? path : prefix + PathSeperator + filename + "." + path.AfterLast(".");
+		}
+		/// <summary>
+		/// Modifies only the extension of the given a file path, and returns the complete path.
+		/// </summary>
+		/// <param name="path">File path</param>
+		/// <param name="extension">Value to set as the new extension</param>
+		/// <returns></returns>
+		public static string SetExtension(this string path, string extension) {
+
+			// exit if invalid path
+			if (path == null) {
+				return path;
+			}
+
+			// make the new path
+			string prefix = path.BeforeLast(".", false);
+			return prefix == "" ? path : prefix + "." + extension;
+		}
+
 	}
 }
