@@ -818,7 +818,57 @@ namespace Jetsons.JetPack {
 		/// Replaces all multiple-whitespace with single spaces.
 		/// </summary>
 		public static string RemoveMultipleSpaces(this string text) {
-			return new Regex("[ ]{2,}", RegexOptions.None).Replace(text, " ");
+			var sb = new StringBuilder();
+			int spaceCount = 0;
+			foreach (var c in text) {
+				bool isWhitespace = c == ' ' || c == '\t';
+				if (isWhitespace) {
+					spaceCount++;
+				} else {
+					spaceCount = 0;
+				}
+				if (spaceCount > 1) {
+					continue;
+				}
+				else {
+					if (isWhitespace) {
+						sb.Append(' ');
+					}
+					else {
+						sb.Append(c);
+					}
+				}
+			}
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Replaces all multiple-newlines with single newlines.
+		/// </summary>
+		public static string RemoveMultipleNewlines(this string text) {
+			var sb = new StringBuilder();
+			int newlineCount = 0;
+			foreach (var c in text) {
+				bool isNewline = c == '\n' || c == '\r';
+				if (isNewline) {
+					newlineCount++;
+				}
+				else {
+					newlineCount = 0;
+				}
+				if (newlineCount > 1) {
+					continue;
+				}
+				else {
+					if (isNewline) {
+						sb.Append("\r\n");
+					}
+					else {
+						sb.Append(c);
+					}
+				}
+			}
+			return sb.ToString();
 		}
 
 		/// <summary>
