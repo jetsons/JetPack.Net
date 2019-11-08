@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using CsvData = System.Collections.Generic.List<System.Collections.Generic.List<string>>;
@@ -484,7 +485,28 @@ namespace Jetsons.JetPack
 
 		}
 
+		/// <summary>
+		/// Opens the given filepath with its default application.
+		/// </summary>
+		public static void OpenFileInDefaultApp(this string path) {
+			if (path.FileExists()) {
+				Process.Start(path);
+			}
+		}
 
+		/// <summary>
+		/// Opens Windows Explorer to show the contents of the given folder path.
+		/// </summary>
+		public static void OpenFolderInExplorer(this string path) {
+			Windows.WindowsExplorer.LaunchSingle(path);
+		}
+
+		/// <summary>
+		/// Opens Windows Explorer to the parent directory and selects the given file path.
+		/// </summary>
+		public static void OpenFileInExplorer(this string path) {
+			Windows.WindowsExplorer.LaunchSingle(path, false);
+		}
 
 	}
 }
