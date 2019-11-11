@@ -9,7 +9,7 @@ namespace Jetsons.CSV {
 	/// Strongly-typed Fast CSV Decoder
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class CsvDecoder<T> {
+	public static class Csv {
 
 		/// <summary>
 		/// Parse a CSV file and convert it into a List of strongly typed Objects.
@@ -21,7 +21,7 @@ namespace Jetsons.CSV {
 		/// <param name="columnProps">Provide the properties per column, if known</param>
 		/// <param name="delimiter">Uses the given delimiter</param>
 		/// <returns></returns>
-		public static CsvResults<T> Decode(string csv, CsvHeaders headers, List<string> columnProps = null, char delimiter = ',') {
+		public static CsvResults<T> Decode<T>(string csv, CsvHeaders headers, List<string> columnProps = null, char delimiter = ',') {
 
 			if (!csv.Exists()) {
 				return new CsvResults<T>();
@@ -39,16 +39,24 @@ namespace Jetsons.CSV {
 		}
 
 
+	}
+
+	/// <summary>
+	/// Strongly-typed Fast CSV Decoder
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class CsvDecoder<T> {
+
 		// INPUTS
-		private string Csv;
-		private CsvHeaders Header;
-		private bool FirstLineIsHeaders;
-		private List<string> ColumnProps = null;
-		private char Delimiter = ',';
+		public string Csv;
+		public CsvHeaders Header;
+		public bool FirstLineIsHeaders;
+		public List<string> ColumnProps = null;
+		public char Delimiter = ',';
+		public List<string> Lines;
 
 		// STATE
 		private CsvResults<T> Results = new CsvResults<T>();
-		private List<string> Lines;
 		private bool NewRecord = true;
 		private StringBuilder Value = new StringBuilder();
 		private T DataObject = default(T);
@@ -64,7 +72,7 @@ namespace Jetsons.CSV {
 		/// <summary>
 		/// Parse a CSV file and convert it into a List of strongly typed Objects
 		/// </summary>
-		private CsvResults<T> DecodeString() {
+		public CsvResults<T> DecodeString() {
 
 			// if props given, take those
 			if (ColumnProps.Exists()) {

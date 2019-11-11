@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using CsvData = System.Collections.Generic.List<System.Collections.Generic.List<string>>;
+using Jetsons.CSV;
+using Jetsons.JSON;
+using Jetsons.MsgPack;
+using Jetsons.ZFO;
 
 namespace Jetsons.JetPack
 {
@@ -41,55 +44,84 @@ namespace Jetsons.JetPack
 			}
 			return null;
 		}
+
 		/// <summary>
-		/// Load the given ZefoFormatter file as an object, or null if it does not exist.
+		/// Parse a CSV file and convert it into a List of strongly typed Objects.
+		/// Never returns null.
+		/// If the first line is not headers, and you don't supply any columnProps, then the names of the columns are assumed.
 		/// </summary>
-		/// <param name="fileName">File path</param>
+		/// <param name="filePath">CSV file path</param>
+		/// <param name="headers">Read the first line as the column headers?</param>
+		/// <param name="columnProps">Provide the properties per column, if known</param>
+		/// <param name="delimiter">Uses the given delimiter</param>
 		/// <returns></returns>
-		public static T LoadZFO<T>(this string fileName) {
-
-			// read the bytes
-			byte[] data = LoadBytes(fileName);
-
-			// if its found, return it as a ByteArray object
-			if (data != null) {
-				return default(T);
+		public static CsvResults<T> LoadCSV<T>(this string filePath, CsvHeaders headers, List<string> columnProps = null, char delimiter = ',') {
+			var text = filePath.LoadTextFile();
+			if (text == null) {
+				return new CsvResults<T> { Success = false };
 			}
-			return default(T);
+			return Csv.Decode<T>(text, headers, columnProps, delimiter);
 		}
 
 		/// <summary>
-		/// Load the given file as a CSV-encoded data table
+		/// Parse a JSON file and convert it into an object.
+		/// Returns null if the file does not exist.
+		/// Use the dynamic type if you want weakly typed data.
+		/// Powered by the fastest Zero Allocation JSON Serializer (Utf8Json).
 		/// </summary>
-		/// <param name="filePath">CSV file path</param>
-		/// <param name="headers">Array you want to recieve headers into</param>
-		/// <param name="columnar">Return an array of columns (true) or rows (false)</param>
+		/// <param name="filePath">JSON file path</param>
+		/// <param name="resolver">Settings to use while decoding</param>
 		/// <returns></returns>
-		/*public static CsvData LoadCSV(this string filePath, List<string> headers = null, bool columnar = false) {
-			return CSV.Decode(filePath.LoadTextFile(), headers, true, columnar, false, ',');
-		}*/
+		public static T LoadJSON<T>(this string filePath, IJsonFormatterResolver resolver = null) {
+			var file = filePath.LoadBytes();
+			if (file == null) {
+				return default(T);
+			}
+			if (resolver == null) {
+				return JsonSerializer.Deserialize<T>(file);
+			}
+			else {
+				return JsonSerializer.Deserialize<T>(file, 0, resolver);
+			}
+		}
 
 		/// <summary>
-		/// Load the given file as a TSV-encoded data table
+		/// Parse a MessagePack file and convert it into an object.
+		/// Returns null if the file does not exist.
+		/// Use the dynamic type if you want weakly typed data.
+		/// Powered by the fastest MessagePack Serializer (MessagePack-CSharp).
 		/// </summary>
-		/// <param name="filePath">TSV file path</param>
-		/// <param name="headers">Array you want to recieve headers into</param>
-		/// <param name="columnar">Return an array of columns (true) or rows (false)</param>
+		/// <param name="filePath">MessagePack file path</param>
+		/// <param name="resolver">Settings to use while decoding</param>
 		/// <returns></returns>
-		/*public static CsvData LoadTSV(this string filePath, List<string> headers = null, bool columnar = false) {
-			return CSV.Decode(filePath.LoadTextFile(), headers, true, columnar, false, '\t');
-		}*/
+		public static T LoadMsgPack<T>(this string filePath, IFormatterResolver resolver = null) {
+			var file = filePath.LoadBytes();
+			if (file == null) {
+				return default(T);
+			}
+			if (resolver == null) {
+				return MessagePackSerializer.Deserialize<T>(file);
+			}
+			else {
+				return MessagePackSerializer.Deserialize<T>(file, resolver);
+			}
+		}
 
 		/// <summary>
-		/// Save the given CSV 2D array data as a CSV-encoded file
+		/// Parse a ZFO file and convert it into an object.
+		/// Returns null if the file does not exist.
+		/// Use the dynamic type if you want weakly typed data.
+		/// Powered by the fastest .NET Serializer (ZeroFormatter).
 		/// </summary>
-		/// <param name="filePath">Output path, overwritten if already exists</param>
-		/// <param name="linesData">CSV data</param>
-		/// <param name="headers">Header to include at the top of the file</param>
-		/// <param name="trimVals">Trim values before saving?</param>
-		/*public static void SaveCSV(string filePath, CsvData linesData, List<string> headers = null, bool trimVals = true) {
-			CSV.Encode(linesData, headers, trimVals).SaveToFile(filePath);
-		}*/
+		/// <param name="filePath">MessagePack file path</param>
+		/// <returns></returns>
+		public static T LoadZFO<T>(this string filePath) {
+			var file = filePath.LoadBytes();
+			if (file == null) {
+				return default(T);
+			}
+			return ZeroFormatterSerializer.Deserialize<T>(file);
+		}
 
 		/// <summary>
 		/// Load the given text file as string, or null if it does not exist.
@@ -125,6 +157,77 @@ namespace Jetsons.JetPack
 			}
 		}
 
+		/// <summary>
+		/// Saves the given stream to a path.
+		/// </summary>
+		/// <param name="buffer">File data</param>
+		/// <param name="fileName">File path, overwritten if it already exists</param>
+		/// <param name="createFolder">Create the parent folder?</param>
+		public static void SaveToFile(this Stream buffer, string fileName, bool createFolder = true) {
+			buffer.ToBytes().SaveToFile(fileName, createFolder);
+		}
+
+		/// <summary>
+		/// Saves the given objects as a serialized ZFO file.
+		/// Powered by the fastest .NET Serializer (ZeroFormatter).
+		/// </summary>
+		/// <param name="data">Objects</param>
+		/// <param name="fileName">File path, overwritten if it already exists</param>
+		/// <param name="createFolder">Create the parent folder?</param>
+		public static void SaveToFileZFO<T>(this T data, string fileName, bool createFolder = true) {
+			var bytes = ZeroFormatterSerializer.Serialize<T>(data);
+			if (bytes != null) {
+				bytes.SaveToFile(fileName, createFolder);
+			}
+			else {
+				fileName.DeleteFile();
+			}
+		}
+
+		/// <summary>
+		/// Saves the given objects as a serialized MessagePack file.
+		/// Powered by the fastest MessagePack Serializer (MessagePack-CSharp).
+		/// </summary>
+		/// <param name="data">Objects</param>
+		/// <param name="fileName">File path, overwritten if it already exists</param>
+		/// <param name="createFolder">Create the parent folder?</param>
+		/// <param name="resolver">Settings to use while encoding</param>
+		public static void SaveToFileMsgPack<T>(this T data, string fileName, bool createFolder = true, IFormatterResolver resolver = null) {
+			var bytes = resolver == null ?
+				MessagePackSerializer.Serialize<T>(data) : MessagePackSerializer.Serialize<T>(data, resolver);
+			if (bytes != null) {
+				bytes.SaveToFile(fileName, createFolder);
+			}
+			else {
+				fileName.DeleteFile();
+			}
+		}
+
+		/// <summary>
+		/// Saves the given objects as a serialized JSON file.
+		/// Powered by the fastest Zero Allocation JSON Serializer (Utf8Json).
+		/// </summary>
+		/// <param name="data">Objects</param>
+		/// <param name="fileName">File path, overwritten if it already exists</param>
+		/// <param name="createFolder">Create the parent folder?</param>
+		/// <param name="resolver">Settings to use while encoding</param>
+		public static void SaveToFileJSON<T>(this T data, string fileName, bool createFolder = true, IJsonFormatterResolver resolver = null) {
+			var bytes = resolver == null ?
+				JsonSerializer.Serialize<T>(data) : JsonSerializer.Serialize<T>(data, resolver);
+			if (bytes != null) {
+				bytes.SaveToFile(fileName, createFolder);
+			}
+			else {
+				fileName.DeleteFile();
+			}
+		}
+
+		/// <summary>
+		/// Saves the given byte array to a path.
+		/// </summary>
+		/// <param name="buffer">File data</param>
+		/// <param name="fileName">File path, overwritten if it already exists</param>
+		/// <param name="createFolder">Create the parent folder?</param>
 		public static void SaveToFile(this byte[] buffer, string fileName, bool createFolder = true) {
 
 			// ensure the folder exists if wanted
@@ -135,12 +238,6 @@ namespace Jetsons.JetPack
 			// open a file stream
 			FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Write);
 
-		/// <summary>
-		/// Save the given byte array to a file
-		/// </summary>
-		/// <param name="buffer">File data</param>
-		/// <param name="fileName">File path, overwritten if it already exists</param>
-		/// <param name="createFolder">Create the parent folder?</param>
 			// write this data into it
 			int length = (int)buffer.Length;
 			stream.Write(buffer, 0, length);
@@ -150,6 +247,7 @@ namespace Jetsons.JetPack
 			stream.Dispose();
 
 		}
+
 		/// <summary>
 		/// Save the given byte array to a temporary file and returns the path
 		/// </summary>
@@ -159,6 +257,7 @@ namespace Jetsons.JetPack
 			buffer.SaveToFile(path);
 			return path;
 		}
+
 		/// <summary>
 		/// Save the given string to a text file
 		/// </summary>
