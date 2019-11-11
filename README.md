@@ -96,7 +96,10 @@ Extension methods for file I/O performed using file path Strings:
 - string.**DeleteFolder**
 - string.**EmptyFolder**
 - string.**LoadBytes**
+- string.**LoadJSON**
+- string.**LoadCSV**
 - string.**LoadZFO**
+- string.**LoadMsgPack**
 - string.**LoadTextFile**
 - string.**SaveToFile** (bytes)
 - string.**SaveToTempFile** (bytes)
@@ -111,6 +114,12 @@ Extension methods for file I/O performed using file path Strings:
 - string.**OpenFolderInExplorer**
 - string.**OpenFileInExplorer**
 
+Extension methods for Objects relating to file I/O:
+
+- any.**SaveToFileJSON**
+- any.**SaveToFileZFO**
+- any.**SaveToFileMsgPack**
+
 Extension methods for URL Strings:
 
 - string.**DownloadURLToFile**
@@ -118,6 +127,7 @@ Extension methods for URL Strings:
 Extension methods for Streams:
 
 - stream.**ToBytes**
+- stream.**SaveToFile**
 
 Extension methods for Dictionaries & ExpandoObjects:
 
