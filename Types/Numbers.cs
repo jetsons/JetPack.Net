@@ -104,6 +104,61 @@ namespace Jetsons.JetPack {
 			return BytesToString((long)value, decimalPlaces);
 		}
 
+		/// <summary>
+		/// Returns the smaller value between this number and the other number.
+		/// </summary>
+		public static double Min(this double value, double otherValue) {
+			return value < otherValue ? value : otherValue;
+		}
+
+		/// <summary>
+		/// Returns the larger value between this number and the other number.
+		/// </summary>
+		public static double Max(this double value, double otherValue) {
+			return value > otherValue ? value : otherValue;
+		}
+
+		/// <summary>
+		/// Ensures that the number is at least the given value.
+		/// </summary>
+		public static double AtLeast(this double value, double minValue) {
+			return value < minValue ? minValue : value;
+		}
+
+		/// <summary>
+		/// Ensures that the number is at most the given value.
+		/// </summary>
+		public static double AtMost(this double value, double maxValue) {
+			return value > maxValue ? maxValue : value;
+		}
+
+		/// <summary>
+		/// Returns the smaller value between this number and the other number.
+		/// </summary>
+		public static int Min(this int value, int otherValue) {
+			return value < otherValue ? value : otherValue;
+		}
+
+		/// <summary>
+		/// Returns the larger value between this number and the other number.
+		/// </summary>
+		public static int Max(this int value, int otherValue) {
+			return value > otherValue ? value : otherValue;
+		}
+
+		/// <summary>
+		/// Ensures that the number is at least the given value.
+		/// </summary>
+		public static int AtLeast(this int value, int minValue) {
+			return value < minValue ? minValue : value;
+		}
+
+		/// <summary>
+		/// Ensures that the number is at most the given value.
+		/// </summary>
+		public static int AtMost(this int value, int maxValue) {
+			return value > maxValue ? maxValue : value;
+		}
 
 	}
 }
