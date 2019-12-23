@@ -1,6 +1,6 @@
-# Jetpack.Net
+# Jetpack for .NET
 
-To use this simply grab our Nuget package Jetpack.Net and add this to the top of your class:
+To use this simply grab our Nuget package `Jetsons.JetPack` and add this to the top of your class:
 
     using Jetsons.JetPack;
 	
@@ -96,10 +96,6 @@ Extension methods for file I/O performed using file path Strings:
 - string.**DeleteFolder**
 - string.**EmptyFolder**
 - string.**LoadBytes**
-- string.**LoadJSON**
-- string.**LoadCSV**
-- string.**LoadZFO**
-- string.**LoadMsgPack**
 - string.**LoadTextFile**
 - string.**SaveToFile** (bytes)
 - string.**SaveToTempFile** (bytes)
@@ -113,12 +109,6 @@ Extension methods for file I/O performed using file path Strings:
 - string.**OpenFileInDefaultApp**
 - string.**OpenFolderInExplorer**
 - string.**OpenFileInExplorer**
-
-Extension methods for Objects relating to file I/O:
-
-- any.**SaveToFileJSON**
-- any.**SaveToFileZFO**
-- any.**SaveToFileMsgPack**
 
 Extension methods for URL Strings:
 
@@ -167,6 +157,20 @@ Extension methods for Lists:
 Extension methods for Object Lists:
 
 - list.**GetProps**
+
+Extension methods for Numbers:
+
+- number.**Round**
+- number.**RoundToDigits**
+- number.**Ceiling**
+- number.**Floor**
+- number.**Snap**
+- number.**Limit**
+- number.**AtLeast**
+- number.**AtMost**
+- number.**Min**
+- number.**Max**
+- number.**BytesToString**
 
 Extension methods for Numeric Lists:
 
@@ -229,21 +233,3 @@ String manipulation:
 - **ReverseCaseGenerator**
 
 Common character codes are in : **Chars**
-
-### ZFO
-
-Fastest C# Serializer and Deserializer for .NET
-
-Types supported : All primitives, All enums, TimeSpan, DateTime, DateTimeOffset, Guid, Tuple<,...>, KeyValuePair<,>, KeyTuple<,...>, Array, List<>, HashSet<>, Dictionary<,>, ReadOnlyCollection<>, ReadOnlyDictionary<,>, IEnumerable<>, ICollection<>, IList<>, ISet<,>, IReadOnlyCollection<>, IReadOnlyList<>, IReadOnlyDictionary<,>, ILookup<,> and inherited ICollection<> with paramterless constructor.
-
-### JSON
-
-Fastest and Zero Allocation JSON Serializer for C#
-
-Types supported : Primitives(int, string, etc...), Enum, Nullable<>, TimeSpan, DateTime, DateTimeOffset, Guid, Uri, Version, StringBuilder, BitArray, Type, ArraySegment<>, BigInteger, Complext, ExpandoObject , Task, Array[], Array[,], Array[,,], Array[,,,], KeyValuePair<,>, Tuple<,...>, ValueTuple<,...>, List<>, LinkedList<>, Queue<>, Stack<>, HashSet<>, ReadOnlyCollection<>, IList<>, ICollection<>, IEnumerable<>, Dictionary<,>, IDictionary<,>, SortedDictionary<,>, SortedList<,>, ILookup<,>, IGrouping<,>, ObservableCollection<>, ReadOnlyOnservableCollection<>, IReadOnlyList<>, IReadOnlyCollection<>, ISet<>, ConcurrentBag<>, ConcurrentQueue<>, ConcurrentStack<>, ReadOnlyDictionary<,>, IReadOnlyDictionary<,>, ConcurrentDictionary<,>, Lazy<>, Task<>, custom inherited ICollection<> or IDictionary<,> with paramterless constructor, IEnumerable, ICollection, IList, IDictionary and custom inherited ICollection or IDictionary with paramterless constructor(includes ArrayList and Hashtable), Exception, your own class or struct(includes anonymous type).
-
-### MsgPack
-
-Extremely Fast MessagePack Serializer for C#
-
-Types supported : Primitives(int, string, etc...), Enum, Nullable<>, TimeSpan, DateTime, DateTimeOffset, Nil, Guid, Uri, Version, StringBuilder, BitArray, ArraySegment<>, BigInteger, Complext, Task, Array[], Array[,], Array[,,], Array[,,,], KeyValuePair<,>, Tuple<,...>, ValueTuple<,...>, List<>, LinkedList<>, Queue<>, Stack<>, HashSet<>, ReadOnlyCollection<>, IList<>, ICollection<>, IEnumerable<>, Dictionary<,>, IDictionary<,>, SortedDictionary<,>, SortedList<,>, ILookup<,>, IGrouping<,>, ObservableCollection<>, ReadOnlyOnservableCollection<>, IReadOnlyList<>, IReadOnlyCollection<>, ISet<>, ConcurrentBag<>, ConcurrentQueue<>, ConcurrentStack<>, ReadOnlyDictionary<,>, IReadOnlyDictionary<,>, ConcurrentDictionary<,>, Lazy<>, Task<>, custom inherited ICollection<> or IDictionary<,> with paramterless constructor, IList, IDictionary and custom inherited ICollection or IDictionary with paramterless constructor(includes ArrayList and Hashtable).
