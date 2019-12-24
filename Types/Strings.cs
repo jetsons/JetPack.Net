@@ -44,7 +44,7 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
-		/// Returns the substring between the given start & end search terms
+		/// Returns the substring between the given start and end search terms
 		/// </summary>
 		/// <param name="text">String to check</param>
 		/// <param name="startTerm">Start marker</param>

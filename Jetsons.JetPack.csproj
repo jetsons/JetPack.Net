@@ -8,12 +8,12 @@
    <PropertyGroup>
     <VersionPrefix>1.0.0</VersionPrefix>
     <Version>1.0.0</Version>
-    <PackageId>Jetsons.Jetpack</PackageId>
+    <PackageId>Jetsons.JetPack</PackageId>
     <Title>Jetsons.Jetpack</Title>
     <Description>The complete extension method library to power your .NET projects. Provides smart extensions for strings, numeric values, math, file management, file paths, URLs, collections and more. Optimized for performance.</Description>
     <Authors>The Jetsons</Authors>
-    <PackageLicenseUrl>https://github.com/jetsons/Jetpack.Net/blob/master/LICENSE.TXT</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/jetsons/Jetpack.Net</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/jetsons/JetPack.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/jetsons/JetPack.Net</PackageProjectUrl>
     <Copyright>MIT License</Copyright>
     <PackageTags>strings,math,numeric,file,csv</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Jetsons.Jetpack.xml</DocumentationFile>
