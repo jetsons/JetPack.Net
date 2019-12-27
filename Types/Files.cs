@@ -4,11 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Jetsons.JetPack
-{
+namespace Jetsons.JetPack {
 
-    public static class Files
-    {
+	public static class Files {
 
 		/// <summary>
 		/// Load the given file as an array of bytes, or null if it does not exist.
@@ -49,7 +47,7 @@ namespace Jetsons.JetPack
 		/// <param name="unicode">Use unicode as default (true) or ANSI as default (false)</param>
 		/// <returns></returns>
 		public static string LoadTextFile(this string filename, bool unicode = true, int codepage = 1252) {
-			
+
 			// load the header of the text file to check for BOM
 			byte[] bom = LoadBytes(filename, 3);
 
@@ -57,7 +55,7 @@ namespace Jetsons.JetPack
 			if (bom == null) {
 				return null;
 			}
-			
+
 			// check if BOM is UTF 8
 			if (bom.Length >= 3 && bom[0] == 0xEF && bom[1] == 0xBB && bom[2] == 0xBF) {
 				return System.IO.File.ReadAllText(filename, Encoding.UTF8);
@@ -68,7 +66,8 @@ namespace Jetsons.JetPack
 				// return UTF8 as default if wanted
 				return System.IO.File.ReadAllText(filename, Encoding.UTF8);
 
-			} else {
+			}
+			else {
 
 				// return ANSI as default
 				return System.IO.File.ReadAllText(filename, Encoding.GetEncoding(codepage));
@@ -139,7 +138,8 @@ namespace Jetsons.JetPack
 			// save the string to file
 			if (unicode) {
 				System.IO.File.WriteAllText(fileName, text, Encoding.UTF8);
-			} else {
+			}
+			else {
 				System.IO.File.WriteAllText(fileName, text, Encoding.GetEncoding(codepage));
 			}
 		}
@@ -169,8 +169,9 @@ namespace Jetsons.JetPack
 				var mStream = stream as MemoryStream;
 				return mStream.ToArray();
 
-			} else {
-				
+			}
+			else {
+
 				// read from here to the end
 				int count = (int)stream.Length;
 				var bytes = new byte[count];
@@ -230,7 +231,8 @@ namespace Jetsons.JetPack
 					// create it
 					Directory.CreateDirectory(path);
 
-				} catch (Exception ex) {
+				}
+				catch (Exception ex) {
 				}
 			}
 		}
@@ -242,7 +244,8 @@ namespace Jetsons.JetPack
 			if (Directory.Exists(folder)) {
 				try {
 					Directory.Delete(folder, true);
-				} catch (Exception ex) {
+				}
+				catch (Exception ex) {
 				}
 			}
 		}
@@ -342,7 +345,7 @@ namespace Jetsons.JetPack
 			var matchedDirs = filtering ? Directory.GetFiles(folderPath, filter) : Directory.GetFiles(folderPath);
 			if (matchedDirs != null) {
 				foreach (var path in matchedDirs) {
-					
+
 					// add only if the extension matches
 					if (extensions == null || path.Extension().IsAny(extensions)) {
 
@@ -361,7 +364,7 @@ namespace Jetsons.JetPack
 
 						// DO NOT recurse into excluded dirs!
 						if (excludeDirNames == null || !path.Filename().IsAny(excludeDirNames)) {
-							
+
 							// recurse into child directories
 							GetFilesLoop(results, path, extensions, recursive, filter, excludeDirNames);
 
@@ -398,7 +401,7 @@ namespace Jetsons.JetPack
 			GetDirectoriesLoop(results, folderPath, recursive, filter, excludeDirNames);
 			return results;
 		}
-		
+
 		private static void GetDirectoriesLoop(List<string> results, string folderPath, bool recursive, string filter, List<string> excludeDirNames = null) {
 
 			// FILTERING LOOP
@@ -424,7 +427,7 @@ namespace Jetsons.JetPack
 				var dirs = Directory.GetDirectories(folderPath);
 				if (dirs != null) {
 					foreach (var path in dirs) {
-						
+
 						// DO NOT recurse into excluded dirs!
 						if (excludeDirNames == null || !path.Filename().IsAny(excludeDirNames)) {
 
@@ -468,6 +471,37 @@ namespace Jetsons.JetPack
 		/// </summary>
 		public static void OpenFileInExplorer(this string path) {
 			Windows.WindowsExplorer.LaunchSingle(path, false);
+		}
+
+		/// <summary>
+		/// Search for the first file in the given folder matching the wildcard string.
+		/// Returns the full file path, or null if not found.
+		/// </summary>
+		public static string SearchForFile(this string path, string wildcards, bool recursive = false) {
+			if (path.IsPathValid() && path.FolderExists()) {
+				var options = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+				var results = Directory.GetFiles(path, wildcards, options);
+				if (!results.Exists()) {
+					return null;
+				}
+				return results[0];
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Search for all the files in the given folder matching the wildcard string.
+		/// Returns the full file path, or a blank list if not found. Never returns null.
+		/// </summary>
+		public static List<string> SearchForFiles(this string path, string wildcards, bool recursive = false) {
+			if (path.IsPathValid() && path.FolderExists()) {
+				var options = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+				var results = Directory.GetFiles(path, wildcards, options);
+				if (results.Exists()) {
+					return results.ToList<string>();
+				}
+			}
+			return new List<string>();
 		}
 
 	}
