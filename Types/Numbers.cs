@@ -160,5 +160,27 @@ namespace Jetsons.JetPack {
 			return value > maxValue ? maxValue : value;
 		}
 
+		/// <summary>
+		/// Converts this decimal value to hexadecimal, with the given prefix.
+		/// </summary>
+		public static string DecimalToHex(this int value, string prefix = "0x") {
+			return prefix + value.ToString("X");
+		}
+
+		/// <summary>
+		/// Converts this decimal value to hexadecimal, with the given prefix.
+		/// </summary>
+		public static string DecimalToHex(this uint value, string prefix = "0x") {
+			return prefix + value.ToString("X");
+		}
+
+		/// <summary>
+		/// Converts this hexadecimal value to a decimal number.
+		/// </summary>
+		public static int HexToDecimal(this string value) {
+			value = value.RemovePrefix("0x").RemovePrefix("0X").RemovePrefix("#");
+			return Convert.ToInt32(value, 16);
+		}
+
 	}
 }
