@@ -1,5 +1,10 @@
 # Jetpack for .NET
 
+[![Version](https://img.shields.io/nuget/vpre/Jetsons.JetPack.svg)](https://www.nuget.org/packages/Jetsons.JetPack)
+[![Downloads](https://img.shields.io/nuget/dt/Jetsons.JetPack.svg)](https://www.nuget.org/packages/Jetsons.JetPack)
+[![GitHub contributors](https://img.shields.io/github/contributors/jetsons/JetPack.Net.svg)](https://github.com/jetsons/JetPack.Net/graphs/contributors)
+[![License](https://img.shields.io/github/license/jetsons/JetPack.Net.svg)](https://github.com/jetsons/JetPack.Net/blob/master/LICENSE)
+
 To use this simply grab our Nuget package `Jetsons.JetPack` and add this to the top of your class:
 
     using Jetsons.JetPack;
