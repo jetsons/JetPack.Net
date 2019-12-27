@@ -8,24 +8,21 @@ using System.Threading.Tasks;
 
 namespace Jetsons.JetPack {
 	public static class Strings {
+
 		/// <summary>
-		/// Checks if the char is a number digit
+		/// Returns the alternate value if the string is empty or null
 		/// </summary>
-		public static bool IsNumber(this char c) {
-			return Char.IsNumber(c);
+		/// <param name="text">String to check</param>
+		/// <param name="alternate">The alternate value to return</param>
+		/// <param name="trim">Trim the text before checking if its blank</param>
+		/// <returns></returns>
+		public static string Or(this string text, string alternate, bool trim = false) {
+			if (text.Exists(trim)) {
+				return text;
+			}
+			return alternate;
 		}
-		/// <summary>
-		/// Checks if the char is a symbol digit
-		/// </summary>
-		public static bool IsSymbol(this char c) {
-			return Char.IsSymbol(c);
-		}
-		/// <summary>
-		/// Checks if the char is a letter digit
-		/// </summary>
-		public static bool IsLetter(this char c) {
-			return Char.IsLetter(c);
-		}
+
 		/// <summary>
 		/// Checks if the given string exists and has any characters in it
 		/// </summary>
@@ -36,7 +33,8 @@ namespace Jetsons.JetPack {
 			if (text != null) {
 				if (trim) {
 					return text.Trim().Length > 0;
-				} else {
+				}
+				else {
 					return text.Length > 0;
 				}
 			}
@@ -60,7 +58,8 @@ namespace Jetsons.JetPack {
 				if (startTerm == endTerm) {
 					start = text.LastIndexOf(startTerm, start - 1, StringComparison.Ordinal);
 				}
-			} else {
+			}
+			else {
 				start = text.IndexOf(startTerm, startAt, StringComparison.Ordinal);
 			}
 			if (start != -1) {
@@ -334,9 +333,11 @@ namespace Jetsons.JetPack {
 			string sep;
 			if (text.Contains("\r\n")) {
 				sep = "\r\n";
-			} else if (text.Contains('\r')) {
+			}
+			else if (text.Contains('\r')) {
 				sep = "\r";
-			} else {
+			}
+			else {
 				sep = "\n";
 			}
 			return SmartSplit(text, sep, deleteBlanks, trimLines);
@@ -349,7 +350,7 @@ namespace Jetsons.JetPack {
 		/// <param name="symbols">Split at symbols too?</param>
 		/// <returns></returns>
 		public static List<string> Words(this string text, bool symbols = false) {
-			
+
 			// init
 			List<string> words = new List<string>();
 			StringBuilder word = new StringBuilder();
@@ -367,7 +368,8 @@ namespace Jetsons.JetPack {
 						word = new StringBuilder();
 					}
 
-				} else {
+				}
+				else {
 
 					// store any other character
 					word.Append(ch);
@@ -395,7 +397,7 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Interprets the string as a camelCase or PascalCase string and returns an array of the individual words
 		/// </summary>
-		/// <param name="text"></param>
+		/// <param name="text">Input text</param>
 		/// <returns></returns>
 		public static List<string> SplitCamelCase(this string text) {
 			bool lastWasLower = false;
@@ -415,7 +417,8 @@ namespace Jetsons.JetPack {
 						word = new StringBuilder();
 					}
 
-				} else {
+				}
+				else {
 
 					// on switchover from lower to upper
 					if (Char.IsUpper(ch) && lastWasLower) {
@@ -444,6 +447,31 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
+		/// Transforms the words into camelCase or PascalCase. Requires the input string to be seperated by spaces or newlines.
+		/// </summary>
+		/// <param name="text">Input text</param>
+		/// <param name="pascalCase">Whether you want the result as PascalCase (true) or camelCase (false)</param>
+		/// <returns></returns>
+		public static string ToCamelCase(this string text, bool pascalCase = false) {
+			var sb = new StringBuilder();
+
+			var firstWord = true;
+
+			// per word
+			foreach (string word in text.Words()) {
+				if (firstWord && !pascalCase) {
+					sb.Append(word.ToLower());
+				}
+				else {
+					sb.Append(word.ToLower().FirstLetterUppercase());
+				}
+				firstWord = false;
+			}
+
+			return sb.ToString();
+		}
+
+		/// <summary>
 		/// Gets the number of lines in a string (high performance version)
 		/// </summary>
 		/// <param name="text">Input text</param>
@@ -459,7 +487,8 @@ namespace Jetsons.JetPack {
 						lineCount++;
 					}
 
-				} else {
+				}
+				else {
 
 					// first detect the EOL character
 					if (currentChar == '\r' || currentChar == '\n') {
@@ -824,7 +853,8 @@ namespace Jetsons.JetPack {
 				bool isWhitespace = c == ' ' || c == '\t';
 				if (isWhitespace) {
 					spaceCount++;
-				} else {
+				}
+				else {
 					spaceCount = 0;
 				}
 				if (spaceCount > 1) {
@@ -837,6 +867,22 @@ namespace Jetsons.JetPack {
 					else {
 						sb.Append(c);
 					}
+				}
+			}
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Eliminates all whitespace (newlines, tabs, spaces) from the string.
+		/// </summary>
+		public static string RemoveSpaces(this string text) {
+			var sb = new StringBuilder();
+			foreach (var c in text) {
+				if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+					continue;
+				}
+				else {
+					sb.Append(c);
 				}
 			}
 			return sb.ToString();
@@ -893,7 +939,8 @@ namespace Jetsons.JetPack {
 			for (int i = 0; i < max; i += term.Length) {
 				if (text.Substring(i, term.Length) == term) {
 					times++;
-				} else {
+				}
+				else {
 					break;
 				}
 			}
@@ -912,7 +959,8 @@ namespace Jetsons.JetPack {
 			for (int i = max; i >= 0; i -= term.Length) {
 				if (text.Substring(i, term.Length) == term) {
 					times++;
-				} else {
+				}
+				else {
 					break;
 				}
 			}
@@ -944,7 +992,8 @@ namespace Jetsons.JetPack {
 				if (c.IsLetter() || c.IsNumber()) {
 					sb.Append(c);
 					lastIsRC = false;
-				} else {
+				}
+				else {
 					if (!lastIsRC) {
 						lastIsRC = true;
 						sb.Append(replaceChar);
@@ -952,6 +1001,157 @@ namespace Jetsons.JetPack {
 				}
 			}
 			return sb.ToString().RemovePostfix(replaceChar.ToString());
+		}
+
+		/// <summary>
+		/// Repeats the given string N times and returns the combined string
+		/// </summary>
+		/// <param name="text">String to repeat</param>
+		/// <param name="times">Times to repeat</param>
+		/// <returns></returns>
+		public static string Repeat(this string text, int times) {
+			StringBuilder sb = new StringBuilder();
+			for (int r = 0; r < times; r++) {
+				sb.Append(text);
+			}
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Ensures the given index is within the string.
+		/// Always returns a valid index within the string, or -1 if the string is blank.
+		/// </summary>
+		/// <param name="text">String</param>
+		/// <param name="index">Index you want to check</param>
+		/// <returns></returns>
+		public static int EnsureValidIndex(this string text, int index) {
+			int count = text.Length;
+			if (count == 0) {
+				return -1;
+			}
+			if (index < 0) {
+				return 0;
+			}
+			if (index >= count) {
+				return count - 1;
+			}
+			return index;
+		}
+
+		/// <summary>
+		/// Gets the substring between the start and end indices. Optionally returns the char at the end index.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="text">String you want a part of</param>
+		/// <param name="startIndex">Index of first character you want</param>
+		/// <param name="endIndex">Index of last character you want (if inclusive is true)</param>
+		/// <param name="inclusive">Return the character at the end index (true) or not (false)</param>
+		/// <returns></returns>
+		public static string Part(this string text, int startIndex, int endIndex, bool inclusive = true) {
+
+			if (text.Length > 0) {
+
+				// support exclusive mode, where char at endIndex is not returned
+				if (!inclusive) {
+					endIndex--;
+				}
+
+				// ensure indices are within the string
+				startIndex = text.EnsureValidIndex(startIndex);
+				endIndex = text.EnsureValidIndex(endIndex);
+
+				// return the selected substring 
+				if (endIndex >= startIndex) {
+					return text.Substring(startIndex, endIndex - startIndex);
+				}
+			}
+
+			return "";
+		}
+
+		/// <summary>
+		/// Transforms the given multi-word text into a valid URL component.
+		/// Spaces are replaced by SEO-friendly dashes. Multiple spaces are replaced by a single dash.
+		/// Only ASCII letters and digits are accepted and all symbols are stripped out.
+		/// </summary>
+		/// <param name="text">Input text</param>
+		/// <returns></returns>
+		public static string RestrictToURLComponent(this string text) {
+			var result = new StringBuilder();
+			var dashCount = 0;
+			foreach (var c in text) {
+
+				// replace multiple spaces with a dash
+				if (c.IsWhitespace() || c == '-') {
+					if (dashCount < 1) {
+						result.Append('-');
+					}
+					dashCount++;
+				}
+
+				// only accept ASCII letters and digits
+				if (c.IsAsciiLetter() || c.IsNumber()) {
+					dashCount = 0;
+					result.Append(c);
+				}
+
+			}
+			return result.ToString();
+		}
+
+		/// <summary>
+		/// Ensures that only Unicode letters and Unicode digits are accepted and all symbols are stripped out.
+		/// </summary>
+		/// <param name="text">Input text</param>
+		/// <returns></returns>
+		public static string RestrictToLettersNumbers(this string text) {
+			var result = new StringBuilder();
+			foreach (var c in text) {
+
+				// only accept letters and digits
+				if (c.IsLetter() || c.IsNumber()) {
+					result.Append(c);
+				}
+
+			}
+			return result.ToString();
+		}
+
+		/// <summary>
+		/// Ensures that only ASCII letters and ASCII digits are accepted and all symbols and special characters are stripped out.
+		/// </summary>
+		/// <param name="text">Input text</param>
+		/// <returns></returns>
+		public static string RestrictToAsciiLettersNumbers(this string text) {
+			var result = new StringBuilder();
+			foreach (var c in text) {
+
+				// only accept ASCII letters and digits
+				if (c.IsAsciiLetter() || c.IsAsciiNumber()) {
+					result.Append(c);
+				}
+
+			}
+			return result.ToString();
+		}
+
+		/// <summary>
+		/// Ensures that only ASCII digits are accepted and all symbols are stripped out.
+		/// </summary>
+		/// <param name="text">Input text</param>
+		/// <param name="acceptDots">Accept the dot character or not. Useful for decimal values</param>
+		/// <param name="acceptNegative">Accept the dash character or not. Useful for negative values</param>
+		/// <returns></returns>
+		public static string RestrictToAsciiNumbers(this string text, bool acceptDots = false, bool acceptNegative = false) {
+			var result = new StringBuilder();
+			foreach (var c in text) {
+
+				// only accept digits and enabled symbols
+				if (c.IsAsciiNumber() || (acceptDots && c == '.') || (acceptNegative && c == '-' && result.Length == 0)) {
+					result.Append(c);
+				}
+			}
+			return result.ToString();
 		}
 
 	}
