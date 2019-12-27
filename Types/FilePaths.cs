@@ -32,6 +32,7 @@ namespace Jetsons.JetPack {
 			}
 			return false;
 		}
+
 		/// <summary>
 		/// Returns true if the given path ends with a slash/backslash
 		/// </summary>
@@ -40,6 +41,7 @@ namespace Jetsons.JetPack {
 		public static bool IsFolderPath(this string path) {
 			return path.IsPathValid() && path.EndsWith(PathSeperator);
 		}
+
 		/// <summary>
 		/// Returns only the filename and extension of the given a file path
 		/// </summary>
@@ -62,6 +64,7 @@ namespace Jetsons.JetPack {
 			string name = path.AfterLast(PathSeperator.ToString(), false);
 			return name == "" ? defaultValue : name;
 		}
+
 		/// <summary>
 		/// Returns only the filename of the given a file path
 		/// </summary>
@@ -79,6 +82,18 @@ namespace Jetsons.JetPack {
 			}
 			return defaultValue;
 		}
+
+		/// <summary>
+		/// Returns only the folder name of the given a file path.
+		/// If the input path ends with a slash, then the name of the folder before the slash is returned.
+		/// In all other cases the input path is assumed to be a file path, and the parent folder name is returned.
+		/// </summary>
+		/// <param name="path">File path</param>
+		/// <returns></returns>
+		public static string FolderName(this string path) {
+			return path.BeforeLast(PathSeperator.ToString()).AfterLast(PathSeperator.ToString());
+		}
+
 		/// <summary>
 		/// Returns only the extension of the given a file path
 		/// </summary>
@@ -150,8 +165,6 @@ namespace Jetsons.JetPack {
 			return null;
 		}
 
-
-
 		/// <summary>
 		/// Modifies only the filename and extension of the given a file path, and returns the complete path.
 		/// </summary>
@@ -174,6 +187,7 @@ namespace Jetsons.JetPack {
 			string prefix = path.BeforeLast(PathSeperator.ToString(), false);
 			return prefix == "" ? path : prefix + PathSeperator + filenameAndExt;
 		}
+
 		/// <summary>
 		/// Modifies only the filename of the given a file path, and returns the complete path.
 		/// </summary>
@@ -196,6 +210,7 @@ namespace Jetsons.JetPack {
 			string prefix = path.BeforeLast(PathSeperator.ToString(), false);
 			return prefix == "" ? path : prefix + PathSeperator + filename + "." + path.AfterLast(".");
 		}
+
 		/// <summary>
 		/// Modifies only the extension of the given a file path, and returns the complete path.
 		/// </summary>
@@ -212,6 +227,27 @@ namespace Jetsons.JetPack {
 			// make the new path
 			string prefix = path.BeforeLast(".", false);
 			return prefix == "" ? path : prefix + "." + extension;
+		}
+
+		/// <summary>
+		/// Replaces all forward and backward slashes with the one you require.
+		/// </summary>
+		/// <param name="path">File path</param>
+		/// <param name="slash">Slash character that you require. Must be forward or backward slash.</param>
+		/// <returns></returns>
+		public static string SetSlash(this string path, char slash) {
+
+			// exit if invalid path
+			if (path == null) {
+				return path;
+			}
+
+			// make the new path
+			if (slash == '\\') {
+				return path.Replace('/', '\\');
+			} else if (slash == '/') {
+				return path.Replace('\\', '/');
+			} else return path;
 		}
 
 	}
