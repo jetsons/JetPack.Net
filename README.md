@@ -15,10 +15,8 @@ This statement unlocks all the extension methods below. Enjoy!
 
 Extension methods for Strings:
 
+- string.**Or**
 - string.**Exists**
-- string.**IsNumber**
-- string.**IsSymbol**
-- string.**IsLetter**
 - string.**Contains**
 - string.**BeginsWith**
 - string.**EndsWith**
@@ -36,6 +34,7 @@ Extension methods for Strings:
 - string.**Lines**
 - string.**Words**
 - string.**CodeWords**
+- string.**ToCamelCase**
 - string.**SplitCamelCase**
 - string.**LineCount**
 - string.**RemovePrefix**
@@ -61,24 +60,51 @@ Extension methods for Strings:
 - string.**FirstLetterUppercase**
 - string.**FirstLetterLowercase**
 - string.**SingleLine**
+- string.**RemoveSpaces**
 - string.**RemoveMultipleSpaces**
 - string.**RemoveMultipleNewlines**
+- string.**RemoveSymbols**
 - string.**Truncate**
+- string.**Repeat**
+- string.**Part**
 - string.**CountPrefix**
 - string.**CountPostfix**
-- string.**RemoveSymbols**
 - string.**WebSafeFilename**
+- string.**EnsureValidIndex**
+- string.**RestrictToURLComponent**
+- string.**RestrictToLettersNumbers**
+- string.**RestrictToAsciiLettersNumbers**
+- string.**RestrictToAsciiNumbers**
+
+Extension methods for Characters:
+
+- char.**IsNumber**
+- char.**IsAsciiNumber**
+- char.**IsSymbol**
+- char.**IsLetter**
+- char.**IsAsciiLetter**
+- char.**IsLetterOrDigit**
+- char.**IsHexDigit**
+- char.**IsLower**
+- char.**IsUpper**
+- char.**IsNewline**
+- char.**IsWhitespace**
+- char.**ToLower**
+- char.**ToUpper**
 
 Extension methods for String encodings:
 
 - string.**EncodeBase64**
 - string.**DecodeBase64**
 - bytes.**EncodeBase64**
-- string.**EscapeHTML**
+- string.**EncodeHTML**
+- string.**DecodeHTML**
 - string.**EncodeUTF8**
 - string.**EncodeANSI**
 - bytes.**DecodeUTF8**
 - bytes.**DecodeANSI**
+- string.**EncodeStringLiteral**
+- string.**DecodeStringLiteral**
 
 Extension methods for manipulating file path Strings:
 
@@ -86,12 +112,14 @@ Extension methods for manipulating file path Strings:
 - string.**IsFolderPath**
 - string.**FilenameAndExt**
 - string.**Filename**
+- string.**FolderName**
 - string.**Extension**
 - string.**SetFilenameAndExt**
 - string.**SetFilename**
 - string.**SetExtension**
 - string.**ParentFolder**
 - string.**AddPath**
+- string.**SetSlash**
 
 Extension methods for file I/O performed using file path Strings:
 
@@ -114,6 +142,15 @@ Extension methods for file I/O performed using file path Strings:
 - string.**OpenFileInDefaultApp**
 - string.**OpenFolderInExplorer**
 - string.**OpenFileInExplorer**
+- string.**SearchForFile**
+- string.**SearchForFiles**
+
+Extension methods for manipulating HTML snippet Strings:
+
+- string.**Bold**
+- string.**Italic**
+- string.**Link**
+- string.**Header**
 
 Extension methods for URL Strings:
 
@@ -176,6 +213,8 @@ Extension methods for Numbers:
 - number.**Min**
 - number.**Max**
 - number.**BytesToString**
+- number.**DecimalToHex**
+- string.**HexToDecimal**
 
 Extension methods for Numeric Lists:
 
