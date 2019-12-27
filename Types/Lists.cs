@@ -11,21 +11,21 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Returns the value of the slot or null if the slot is outside the bounds of the list, instead of throwing an exception
 		/// </summary>
-		public static T Get<T>(this List<T> list, int slot) {
+		public static T Get<T>(this List<T> list, int slot, T defaultValue = default(T)) {
 			if (list.HasSlot(slot)) {
 				return list[slot];
 			}
-			return default(T);
+			return defaultValue;
 		}
 
 		/// <summary>
 		/// Returns the value of the slot or null if the slot is outside the bounds of the list, instead of throwing an exception
 		/// </summary>
-		public static T Get<T>(this IList<T> list, int slot) {
+		public static T Get<T>(this IList<T> list, int slot, T defaultValue = default(T)) {
 			if (list.HasSlot(slot)) {
 				return list[slot];
 			}
-			return default(T);
+			return defaultValue;
 		}
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace Jetsons.JetPack {
 				list[slot] = value;
 			}
 		}
-		
+
 		/// <summary>
 		/// Returns true if the list contains the given slot index
 		/// </summary>
@@ -178,7 +178,7 @@ namespace Jetsons.JetPack {
 			}
 			return list;
 		}
-		
+
 		/// <summary>
 		/// Converts the given list to an array
 		/// </summary>
@@ -200,12 +200,14 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
-		/// Adds the given item into the list only if its not already in the list
+		/// Adds the given item into the list only if its not already in the list. Returns true if the list was modified.
 		/// </summary>
-		public static void AddOnce(this IList list, object item) {
+		public static bool AddOnce(this IList list, object item) {
 			if (item != null && list.IndexOf(item) == -1) {
 				list.Add(item);
+				return true;
 			}
+			return false;
 		}
 
 		/// <summary>
@@ -261,23 +263,23 @@ namespace Jetsons.JetPack {
 		/// <typeparam name="T"></typeparam>
 		/// <param name="list">List you want a part of</param>
 		/// <param name="startIndex">Index of first element you want</param>
-		/// <param name="endIndex">Index of last element you want (excluded if incluse=false)</param>
+		/// <param name="endIndex">Index of last element you want (if inclusive is true)</param>
 		/// <param name="inclusive">Return the end index item (true) or not (false)</param>
 		/// <returns></returns>
 		public static List<T> Part<T>(this List<T> list, int startIndex, int endIndex, bool inclusive = true) {
-			
+
 			List<T> result = new List<T>();
 
 			if (list.Count > 0) {
 
-				// ensure indices are within the list
-				startIndex = list.EnsureValidIndex(startIndex);
-				endIndex = list.EnsureValidIndex(endIndex);
-				
 				// support exclusive mode, where item corresponding to endIndex is not returned
 				if (!inclusive) {
 					endIndex--;
 				}
+
+				// ensure indices are within the list
+				startIndex = list.EnsureValidIndex(startIndex);
+				endIndex = list.EnsureValidIndex(endIndex);
 
 				// add all items
 				for (int x = startIndex; x <= endIndex; x++) {

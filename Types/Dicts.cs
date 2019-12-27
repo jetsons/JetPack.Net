@@ -18,7 +18,8 @@ namespace Jetsons.JetPack {
 			var dict = expando as IDictionary<string, object>;
 			if (dict.ContainsKey(property)) {
 				dict[property] = value;
-			} else {
+			}
+			else {
 				dict.Add(property, value);
 			}
 		}
@@ -32,7 +33,8 @@ namespace Jetsons.JetPack {
 			var dict = expando as IDictionary<string, object>;
 			if (dict.ContainsKey(property)) {
 				return dict[property];
-			} else {
+			}
+			else {
 				return defaultValue;
 			}
 		}
@@ -46,7 +48,8 @@ namespace Jetsons.JetPack {
 		public static void SetProp<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey property, TValue value) {
 			if (dict.ContainsKey(property)) {
 				dict[property] = value;
-			} else {
+			}
+			else {
 				dict.Add(property, value);
 			}
 		}
@@ -59,7 +62,8 @@ namespace Jetsons.JetPack {
 		public static TValue GetProp<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey property, TValue defaultValue = default(TValue)) {
 			if (dict.ContainsKey(property)) {
 				return dict[property];
-			} else {
+			}
+			else {
 				return defaultValue;
 			}
 		}
@@ -88,7 +92,8 @@ namespace Jetsons.JetPack {
 						// get the existing sub-object
 						obj = obj[part] as IDictionary<string, object>;
 
-					} else {
+					}
+					else {
 
 						// create a new sub-object
 						obj[part] = obj = new Dictionary<string, object>();
@@ -127,7 +132,8 @@ namespace Jetsons.JetPack {
 						// get the existing sub-object
 						obj = obj[part] as IDictionary<string, object>;
 
-					} else {
+					}
+					else {
 
 						// not found
 						return defaultValue;
