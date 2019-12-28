@@ -121,6 +121,21 @@ namespace Jetsons.JetPack {
 			start += searchTerm.Length;
 			return text.Substring(start);
 		}
+		/// <summary>
+		/// Returns the substring after the *first* occurrence of the provided character in the string
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns></returns>
+		public static string After(this string text, char searchTerm, bool returnAll = true) {
+			int start = text.IndexOf(searchTerm);
+			if (start == -1) {
+				return returnAll ? text : "";
+			}
+			start += 1;
+			return text.Substring(start);
+		}
 
 		/// <summary>
 		/// Returns the substring after the last occurence of the search term
@@ -135,6 +150,21 @@ namespace Jetsons.JetPack {
 				return returnAll ? text : "";
 			}
 			start += searchTerm.Length;
+			return text.Substring(start);
+		}
+		/// <summary>
+		/// Returns the substring after the last occurence of the search term
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns></returns>
+		public static string AfterLast(this string text, char searchTerm, bool returnAll = true) {
+			int start = text.LastIndexOf(searchTerm);
+			if (start == -1) {
+				return returnAll ? text : "";
+			}
+			start += 1;
 			return text.Substring(start);
 		}
 
@@ -152,6 +182,20 @@ namespace Jetsons.JetPack {
 			}
 			return text.Substring(0, start);
 		}
+		/// <summary>
+		/// Returns the substring before the *first* occurrence of the search term
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns></returns>
+		public static string Before(this string text, char searchTerm, bool returnAll = true) {
+			int start = text.IndexOf(searchTerm);
+			if (start == -1) {
+				return returnAll ? text : "";
+			}
+			return text.Substring(0, start);
+		}
 
 		/// <summary>
 		/// Returns everything before the last occurrence of the provided character in the string
@@ -162,6 +206,20 @@ namespace Jetsons.JetPack {
 		/// <returns></returns>
 		public static string BeforeLast(this string text, string searchTerm, bool returnAll = true) {
 			int start = text.LastIndexOf(searchTerm, StringComparison.Ordinal);
+			if (start == -1) {
+				return returnAll ? text : "";
+			}
+			return text.Substring(0, start);
+		}
+		/// <summary>
+		/// Returns everything before the last occurrence of the provided character in the string
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns></returns>
+		public static string BeforeLast(this string text, char searchTerm, bool returnAll = true) {
+			int start = text.LastIndexOf(searchTerm);
 			if (start == -1) {
 				return returnAll ? text : "";
 			}
