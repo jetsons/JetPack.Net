@@ -137,7 +137,9 @@ Extension methods for file I/O performed using file path Strings:
 - string.**SaveToTempFile** (string)
 - string.**FileSize**
 - string.**FileCreatedDate**
+- string.**FileSetCreatedDate**
 - string.**FileModifiedDate**
+- string.**FileSetModifiedDate**
 - string.**GetFilesInDirectory**
 - string.**GetDirectoriesInDirectory**
 - string.**OpenFileInDefaultApp**
@@ -145,6 +147,8 @@ Extension methods for file I/O performed using file path Strings:
 - string.**OpenFileInExplorer**
 - string.**SearchForFile**
 - string.**SearchForFiles**
+- string.**CopyFile**
+- string.**MoveFile**
 
 Extension methods for manipulating HTML snippet Strings:
 

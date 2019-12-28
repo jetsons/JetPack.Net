@@ -296,6 +296,36 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
+		/// Modifies the file created date.
+		/// </summary>
+		/// <returns></returns>
+		public static void FileSetCreatedDate(this string path, DateTime date, bool UTC = false) {
+			if (path.FileExists()) {
+				if (UTC) {
+					File.SetCreationTimeUtc(path, date);
+				}
+				else {
+					File.SetCreationTime(path, date);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Modifies the file modified date.
+		/// </summary>
+		/// <returns></returns>
+		public static void FileSetModifiedDate(this string path, DateTime date, bool UTC = false) {
+			if (path.FileExists()) {
+				if (UTC) {
+					File.SetLastWriteTimeUtc(path, date);
+				}
+				else {
+					File.SetLastWriteTime(path, date);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Gets a list of the files in a given directory, filtering by file extensions and optionally by a wildcard filter.
 		/// Entirely skips the directories marked for exclusion.
 		/// Returns a list of absolute paths.
@@ -504,5 +534,62 @@ namespace Jetsons.JetPack {
 			return new List<string>();
 		}
 
+		/// <summary>
+		/// Copies the given file to another path, optionally overwriting it.
+		/// Returns true if successful. Returns false if the file was not copied or not overwritten.
+		/// </summary>
+		public static bool CopyFile(this string path, string targetPath, bool overwrite = false) {
+
+			// if both paths are valid
+			if (path.IsPathValid() && targetPath.IsPathValid() && path.FileExists()) {
+
+				// overwriting/skip behaviour
+				if (targetPath.FileExists()) {
+					if (overwrite) {
+						targetPath.DeleteFile();
+					}
+					else {
+						return false;
+					}
+				}
+
+				// try copying the file
+				try {
+					File.Copy(path, targetPath);
+					return true;
+				}
+				catch (Exception ex) { }
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Moves the given file to another path, optionally overwriting it.
+		/// Returns true if successful. Returns false if the file was not moved or not overwritten.
+		/// </summary>
+		public static bool MoveFile(this string path, string targetPath, bool overwrite = false) {
+
+			// if both paths are valid
+			if (path.IsPathValid() && targetPath.IsPathValid() && path.FileExists()) {
+
+				// overwriting/skip behaviour
+				if (targetPath.FileExists()) {
+					if (overwrite) {
+						targetPath.DeleteFile();
+					}
+					else {
+						return false;
+					}
+				}
+
+				// try moving the file
+				try {
+					File.Move(path, targetPath);
+					return true;
+				}
+				catch (Exception ex) { }
+			}
+			return false;
+		}
 	}
 }
