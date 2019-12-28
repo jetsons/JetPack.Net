@@ -131,10 +131,10 @@ Extension methods for file I/O performed using file path Strings:
 - string.**EmptyFolder**
 - string.**LoadBytes**
 - string.**LoadTextFile**
-- string.**SaveToFile** (bytes)
-- string.**SaveToTempFile** (bytes)
-- string.**SaveToFile** (string)
-- string.**SaveToTempFile** (string)
+- string.**SaveToFile**
+- string.**SaveToTempFile**
+- bytes.**SaveToFile**
+- bytes.**SaveToTempFile**
 - string.**FileSize**
 - string.**FileCreatedDate**
 - string.**FileSetCreatedDate**
