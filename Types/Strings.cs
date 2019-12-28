@@ -509,19 +509,21 @@ namespace Jetsons.JetPack {
 		/// </summary>
 		/// <param name="text">Input text</param>
 		/// <param name="pascalCase">Whether you want the result as PascalCase (true) or camelCase (false)</param>
+		/// <param name="preserveUppercase">Whether to preserve uppercase chars or not</param>
 		/// <returns></returns>
-		public static string ToCamelCase(this string text, bool pascalCase = false) {
+		public static string ToCamelCase(this string text, bool pascalCase = false, bool preserveUppercase = true) {
 			var sb = new StringBuilder();
 
 			var firstWord = true;
 
 			// per word
 			foreach (string word in text.Words()) {
+				var word2 = preserveUppercase ? word : word.ToLower();
 				if (firstWord && !pascalCase) {
-					sb.Append(word.ToLower());
+					sb.Append(word2.FirstLetterLowercase());
 				}
 				else {
-					sb.Append(word.ToLower().FirstLetterUppercase());
+					sb.Append(word2.FirstLetterUppercase());
 				}
 				firstWord = false;
 			}

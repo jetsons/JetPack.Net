@@ -133,8 +133,6 @@ Extension methods for file I/O performed using file path Strings:
 - string.**LoadTextFile**
 - string.**SaveToFile**
 - string.**SaveToTempFile**
-- bytes.**SaveToFile**
-- bytes.**SaveToTempFile**
 - string.**FileSize**
 - string.**FileCreatedDate**
 - string.**FileSetCreatedDate**
@@ -161,8 +159,10 @@ Extension methods for URL Strings:
 
 - string.**DownloadURLToFile**
 
-Extension methods for Streams:
+Extension methods for Byte arrays & Streams:
 
+- bytes.**SaveToFile**
+- bytes.**SaveToTempFile**
 - stream.**ToBytes**
 - stream.**SaveToFile**
 

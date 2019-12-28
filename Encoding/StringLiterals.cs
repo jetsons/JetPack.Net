@@ -59,6 +59,11 @@ namespace Jetsons.JetPack {
 		/// <returns></returns>
 		public static string DecodeStringLiteral(this string text) {
 
+			// quickly exit for blank strings
+			if (!text.Exists()) {
+				return "";
+			}
+
 			// remove the starting and ending quotes, if any
 			var isQuoted = text[0] == Chars.SingleQuoteChar || text[0] == Chars.DoubleQuoteChar;
 			var start = isQuoted ? 1 : 0;
