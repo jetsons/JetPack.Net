@@ -61,7 +61,7 @@ namespace Jetsons.JetPack {
 			}
 
 			// get the filename
-			string name = path.AfterLast(PathSeperator.ToString(), false);
+			string name = path.AfterLast(PathSeperator, false);
 			return name == "" ? defaultValue : name;
 		}
 
@@ -84,14 +84,23 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
-		/// Returns only the folder name of the given a file path.
-		/// If the input path ends with a slash, then the name of the folder before the slash is returned.
-		/// In all other cases the input path is assumed to be a file path, and the parent folder name is returned.
+		/// Returns only the folder name of the given folder or file path.
 		/// </summary>
 		/// <param name="path">File path</param>
+		/// <param name="pathIsFolder">Path is surely a folder path (true) or surely a file path (false)</param>
 		/// <returns></returns>
-		public static string FolderName(this string path) {
-			return path.BeforeLast(PathSeperator.ToString()).AfterLast(PathSeperator.ToString());
+		public static string FolderName(this string path, bool pathIsFolder) {
+			if (pathIsFolder) {
+				if (path.EndsWith(PathSeperator)) {
+					return path.BeforeLast(PathSeperator).AfterLast(PathSeperator);
+				}
+				else {
+					return path.AfterLast(PathSeperator);
+				}
+			}
+			else {
+				return path.BeforeLast(PathSeperator).AfterLast(PathSeperator);
+			}
 		}
 
 		/// <summary>
@@ -132,7 +141,7 @@ namespace Jetsons.JetPack {
 
 			// return the folder
 			if (path.Contains(PathSeperator)) {
-				return path.BeforeLast(PathSeperator.ToString());
+				return path.BeforeLast(PathSeperator);
 			} else {
 				return returnBlankIfFile ? "" : path;
 			}
@@ -184,7 +193,7 @@ namespace Jetsons.JetPack {
 			}
 
 			// make the new path
-			string prefix = path.BeforeLast(PathSeperator.ToString(), false);
+			string prefix = path.BeforeLast(PathSeperator, false);
 			return prefix == "" ? path : prefix + PathSeperator + filenameAndExt;
 		}
 
@@ -207,7 +216,7 @@ namespace Jetsons.JetPack {
 			}
 
 			// make the new path
-			string prefix = path.BeforeLast(PathSeperator.ToString(), false);
+			string prefix = path.BeforeLast(PathSeperator, false);
 			return prefix == "" ? path : prefix + PathSeperator + filename + "." + path.AfterLast(".");
 		}
 
