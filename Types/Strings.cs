@@ -1154,6 +1154,39 @@ namespace Jetsons.JetPack {
 			return result.ToString();
 		}
 
+		/// <summary>
+		/// Ensures that only characters accepted in a filename are preserved, all other characters are replaced with a delimiter.
+		/// You can use this only for file names with extensions, or folder names, but not for entire paths.
+		/// Generates filenames compatible with Windows, Unix, and web-safe file names.
+		/// </summary>
+		/// <param name="text">File name or folder name</param>
+		/// <param name="delimiter">Delimiter to replace invalid characters with. Only one delimiter is added if multiple invalid chars are in sequence.</param>
+		/// <returns></returns>
+		public static string RestrictToFilename(this string text, char delimiter = '_') {
+			var result = new StringBuilder();
+			bool addedDelim = false;
+			foreach (var c in text) {
+
+				// skip invalid characters
+				if (c == '^' || c == '<' || c == '>' || c == '|' || c == '?' || c == '+' ||
+					c == '*' || c == '!' || c == ';' || c == '*' || c == '"' || c == '#' ||
+					c == '\r' || c == '\n' || c == '\t' || c == '\\' || c == '/' || c == ':') {
+					if (!addedDelim) {
+						addedDelim = true;
+						result.Append(delimiter);
+					}
+					continue;
+				}
+				else {
+
+					// accept any other chars
+					result.Append(c);
+					addedDelim = false;
+				}
+			}
+			return result.ToString();
+		}
+
 	}
 
 	/// <summary>

@@ -75,6 +75,7 @@ Extension methods for Strings:
 - string.**RestrictToLettersNumbers**
 - string.**RestrictToAsciiLettersNumbers**
 - string.**RestrictToAsciiNumbers**
+- string.**RestrictToFilename**
 
 Extension methods for Characters:
 
