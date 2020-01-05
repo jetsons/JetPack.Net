@@ -281,4 +281,48 @@ String manipulation:
 - **ReverseCaseLearner**
 - **ReverseCaseGenerator**
 
+Binary stream manipulation:
+
+- **JetArray**
+- **jetarray[]**
+- **jetarray.Append**
+- **jetarray.Xor**
+- **jetarray.ToArray**
+- **jetarray.ReadBytes**
+- **jetarray.WriteBytes**
+- **jetarray.ReadFlags**
+- **jetarray.WriteFlags**
+- **jetarray.ReadBitArray**
+- **jetarray.WriteBitArray**
+- **jetarray.ReadBoolean**
+- **jetarray.WriteBoolean**
+- **jetarray.ReadString**
+- **jetarray.WriteString**
+- **jetarray.ReadByte**
+- **jetarray.WriteByte**
+- **jetarray.ReadSByte**
+- **jetarray.WriteSByte**
+- **jetarray.ReadShort**
+- **jetarray.WriteShort**
+- **jetarray.ReadUShort**
+- **jetarray.WriteUShort**
+- **jetarray.ReadInt**
+- **jetarray.WriteInt**
+- **jetarray.ReadUInt**
+- **jetarray.WriteUInt**
+- **jetarray.ReadLong**
+- **jetarray.WriteLong**
+- **jetarray.ReadULong**
+- **jetarray.WriteULong**
+- **jetarray.ReadFloat**
+- **jetarray.WriteFloat**
+- **jetarray.ReadDouble**
+- **jetarray.WriteDouble**
+- **jetarray.ReadVarUInt32**
+- **jetarray.WriteVarUInt32**
+- **jetarray.ReadVarInt32**
+- **jetarray.WriteVarInt32**
+- **jetarray.ReadVarDouble**
+- **jetarray.WriteVarDouble**
+
 Common character codes are in : **Chars**
