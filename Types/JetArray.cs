@@ -380,8 +380,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Reads a 64-bit signed integer to the stream.
 		/// </summary>
-		/// <param name="value">A 64-bit signed integer.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public long ReadLong() {
 			if (BigEndian) {
 				return BitConverter.ToInt64(ReadBytesBE(8), 0);
@@ -393,8 +391,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Reads a 64-bit unsigned integer to the stream.
 		/// </summary>
-		/// <param name="value">A 64-bit unsigned integer.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public ulong ReadULong() {
 			if (BigEndian) {
 				return BitConverter.ToUInt64(ReadBytesBE(8), 0);
@@ -475,8 +471,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a single-precision floating point number in Big Endian, to the stream.
 		/// </summary>
-		/// <param name="value">A single-precision floating point number.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteFloat(float value) {
 			if (BigEndian) {
 				WriteBigEndian(BitConverter.GetBytes(value));
@@ -488,8 +482,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a double-precision floating point number in Big Endian, to the stream.
 		/// </summary>
-		/// <param name="value">A double-precision floating point number.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteDouble(double value) {
 			if (BigEndian) {
 				WriteBigEndian(BitConverter.GetBytes(value));
@@ -502,8 +494,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a 32-bit signed integer to the stream.
 		/// </summary>
-		/// <param name="value">A 32-bit signed integer.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteInt(int value) {
 			if (BigEndian) {
 				WriteBigEndian(BitConverter.GetBytes(value));
@@ -516,8 +506,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a 32-bit unsigned integer to the stream.
 		/// </summary>
-		/// <param name="value">A 32-bit signed integer.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteUInt(uint value) {
 			if (BigEndian) {
 				WriteBigEndian(BitConverter.GetBytes(value));
@@ -529,8 +517,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a 32-bit signed integer to the stream using variable length unsigned 29-bit integer encoding.
 		/// </summary>
-		/// <param name="value">A 32-bit signed integer.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteUInt24(int value) {
 			byte[] bytes = new byte[3];
 			bytes[0] = (byte)(0xFF & (value >> 16));
@@ -542,8 +528,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a 64-bit signed integer to the stream.
 		/// </summary>
-		/// <param name="value">A 64-bit signed integer.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteLong(long value) {
 			if (BigEndian) {
 				WriteBigEndian(BitConverter.GetBytes(value));
@@ -555,8 +539,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a 64-bit unsigned integer to the stream.
 		/// </summary>
-		/// <param name="value">A 64-bit unsigned integer.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteULong(ulong value) {
 			if (BigEndian) {
 				WriteBigEndian(BitConverter.GetBytes(value));
@@ -613,8 +595,6 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Writes a Boolean value to the stream.
 		/// </summary>
-		/// <param name="value">A Boolean value.</param>
-		/// <remarks>No type marker is written in the stream.</remarks>
 		public void WriteBoolean(bool value) {
 			writer.BaseStream.WriteByte(value ? ((byte)1) : ((byte)0));
 		}
@@ -728,7 +708,6 @@ namespace Jetsons.JetPack {
 		/// The length of the UTF-8 string in bytes is written first, as a 16-bit integer, followed by the bytes representing the characters of the string.
 		/// </summary>
 		/// <param name="value">The UTF-8 string, must be at most 65536 chars long.</param>
-		/// <remarks>Standard or long string header is not written.</remarks>
 		private void WriteUTF(string value) {
 			UTF8Encoding utf8Encoding = new UTF8Encoding();
 			int byteCount = utf8Encoding.GetByteCount(value);
@@ -744,7 +723,6 @@ namespace Jetsons.JetPack {
 		/// Similar to WriteUTF, but does not prefix the string with a 16-bit length word.
 		/// </summary>
 		/// <param name="value">The UTF-8 string, must be at most 65536 chars long.</param>
-		/// <remarks>Standard or long string header is not written.</remarks>
 		private void WriteUTFBytes(string value) {
 			UTF8Encoding utf8Encoding = new UTF8Encoding();
 			byte[] buffer = utf8Encoding.GetBytes(value);
