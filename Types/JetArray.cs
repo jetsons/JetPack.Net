@@ -514,16 +514,6 @@ namespace Jetsons.JetPack {
 				writer.Write(value);
 			}
 		}
-		/// <summary>
-		/// Writes a 32-bit signed integer to the stream using variable length unsigned 29-bit integer encoding.
-		/// </summary>
-		public void WriteUInt24(int value) {
-			byte[] bytes = new byte[3];
-			bytes[0] = (byte)(0xFF & (value >> 16));
-			bytes[1] = (byte)(0xFF & (value >> 8));
-			bytes[2] = (byte)(0xFF & (value >> 0));
-			writer.BaseStream.Write(bytes, 0, bytes.Length);
-		}
 
 		/// <summary>
 		/// Writes a 64-bit signed integer to the stream.
@@ -861,7 +851,7 @@ namespace Jetsons.JetPack {
 		/// Reads a variable length 32-bit unsigned integer from the stream.
 		/// The number will use 1 to 5 bytes depending on its length.
 		/// </summary>
-		public uint ReadVarUInt32() {
+		public uint ReadVarUInt() {
 			uint result = ReadByte();
 			if ((result & 0x80) > 0) {
 				result = (result & 0x7f) | ((uint)ReadByte() << 7);
@@ -882,9 +872,9 @@ namespace Jetsons.JetPack {
 		/// Reads a variable length 32-bit integer from the stream.
 		/// The number will use 1 to 5 bytes depending on its length.
 		/// </summary>
-		public int ReadVarInt32() {
+		public int ReadVarInt() {
 
-			uint u = ReadVarUInt32();
+			uint u = ReadVarUInt();
 			bool isNeg = ((u & 1) == 1);    /// check 1st bit (bit 0)
 			u = (u & 0xFFFFFFFE) >> 1;      /// ignore 1st bit (bit 0)
 			if (isNeg) {
@@ -901,7 +891,7 @@ namespace Jetsons.JetPack {
 		/// Writes a variable length 32-bit unsigned integer to the stream.
 		/// The number will use 1 to 5 bytes depending on its length.
 		/// </summary>
-		public void WriteVarUInt32(uint number) {
+		public void WriteVarUInt(uint number) {
 
 			if (number < 128) {
 				WriteByte((byte)number);
@@ -937,7 +927,7 @@ namespace Jetsons.JetPack {
 		/// Writes a variable length 32-bit integer to the stream.
 		/// The number will use 1 to 5 bytes depending on its length.
 		/// </summary>
-		public void WriteVarInt32(int number) {
+		public void WriteVarInt(int number) {
 			uint u = 0;
 			if (number < 0) {
 				u = ((uint)(-number)) - 1;
@@ -946,7 +936,7 @@ namespace Jetsons.JetPack {
 			else {
 				u = ((uint)number) << 1;    /// clear 1st bit if negative
 			}
-			WriteVarUInt32(u);
+			WriteVarUInt(u);
 
 		}
 
