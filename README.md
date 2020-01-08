@@ -11,6 +11,11 @@ To use this simply grab our Nuget package `Jetsons.JetPack` and add this to the 
 	
 This statement unlocks all the extension methods below. Enjoy!
 
+Supported platforms:
+
+- .NET Framework 4.5
+- .NET Standard 2.0
+
 ### Extensions
 
 Extension methods for Strings:

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !STANDARD
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -81,3 +83,5 @@ namespace Jetsons.JetPack {
 
 	}
 }
+
+#endif

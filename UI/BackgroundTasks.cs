@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !STANDARD
+
+using System;
 using System.Windows.Forms;
 
 namespace Jetsons.JetPack {
@@ -35,6 +37,7 @@ namespace Jetsons.JetPack {
 			return manager;
 		}
 
-
 	}
 }
+
+#endif

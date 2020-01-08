@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !STANDARD
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Jetsons.JetPack {
+
 	public static class RichTexts {
 
 		/// <summary>
@@ -40,4 +43,7 @@ namespace Jetsons.JetPack {
 
 
 	}
+
 }
+
+#endif

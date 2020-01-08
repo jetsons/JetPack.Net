@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿#if !STANDARD
+
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -72,3 +74,5 @@ namespace Jetsons.JetPack {
 		}
 	}
 }
+
+#endif

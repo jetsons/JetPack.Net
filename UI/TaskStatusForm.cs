@@ -1,4 +1,6 @@
-﻿using Jetsons.JetPack;
+﻿#if !STANDARD
+
+using Jetsons.JetPack;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -248,3 +250,5 @@ namespace Jetsons.JetPack {
 
 	}
 }
+
+#endif

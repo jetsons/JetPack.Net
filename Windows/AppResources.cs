@@ -21,6 +21,18 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
+		/// Extracts the resource at the given namespace path and returns it as a byte array
+		/// </summary>
+		public static byte[] GetBytes(string resourcePath) {
+			var assembly = Assembly.GetEntryAssembly();
+			using (Stream stream = assembly.GetManifestResourceStream(resourcePath)) {
+				return stream.ToBytes();
+			}
+		}
+
+#if !STANDARD
+
+		/// <summary>
 		/// Extracts the resource at the given namespace path and returns it as an Icon
 		/// </summary>
 		public static Icon GetIcon(string resourcePath) {
@@ -40,15 +52,7 @@ namespace Jetsons.JetPack {
 			}
 		}
 
-		/// <summary>
-		/// Extracts the resource at the given namespace path and returns it as a byte array
-		/// </summary>
-		public static byte[] GetBytes(string resourcePath) {
-			var assembly = Assembly.GetEntryAssembly();
-			using (Stream stream = assembly.GetManifestResourceStream(resourcePath)) {
-				return stream.ToBytes();
-			}
-		}
+#endif
 
 	}
 }

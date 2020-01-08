@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !STANDARD
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -250,4 +252,7 @@ namespace Jetsons.JetPack {
 		#endregion
 
 	}
+	
 }
+
+#endif
