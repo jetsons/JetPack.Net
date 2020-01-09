@@ -10,6 +10,9 @@ using System.Windows.Forms;
 namespace Jetsons.JetPack {
 	public static class Browse {
 
+		/// <summary>
+		/// Show a folder browser dialog and return the folder path selected. Returns null if the dialog was closed.
+		/// </summary>
 		public static string Folder(string title) {
 			var dialog = new FolderBrowserDialog();
 			dialog.Description = title;
@@ -20,6 +23,9 @@ namespace Jetsons.JetPack {
 			return null;
 		}
 
+		/// <summary>
+		/// Show a multiple-file browser dialog and return the file paths selected. Returns null if the dialog was closed.
+		/// </summary>
 		public static List<string> Files(string title, string filter) {
 			var dialog = new OpenFileDialog();
 			dialog.Title = title;
@@ -33,6 +39,10 @@ namespace Jetsons.JetPack {
 			}
 			return null;
 		}
+
+		/// <summary>
+		/// Show a single-file browser dialog and return the file path selected. Returns null if the dialog was closed.
+		/// </summary>
 		public static string File(string title, string filter, bool saveFile = false) {
 			FileDialog dialog = saveFile ? (FileDialog)new SaveFileDialog() : (FileDialog)new OpenFileDialog();
 			dialog.Title = title;
