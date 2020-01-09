@@ -238,7 +238,13 @@ Extension methods for Colors:
 - int.**ToColor**
 - color.**ToInt**
 
-Extension methods for RichTextBoxes:
+Extension methods for WinForms Controls:
+
+- control.**CrossThread**
+- control.**VisibleCrossThread**
+- control.**EnabledCrossThread**
+
+Extension methods for WinForms RichTextBoxes:
 
 - rtf.**HighlightAll**
 
