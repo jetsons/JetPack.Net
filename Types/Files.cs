@@ -172,6 +172,11 @@ namespace Jetsons.JetPack {
 			}
 			else {
 
+				// rewind to the start of the stream if possible
+				if (stream.CanSeek) {
+					stream.Seek(0, SeekOrigin.Begin);
+				}
+
 				// read from here to the end
 				int count = (int)stream.Length;
 				var bytes = new byte[count];
