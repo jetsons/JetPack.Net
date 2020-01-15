@@ -6,13 +6,17 @@ using System.Reflection;
 
 namespace Jetsons.JetPack {
 	public static class AppResources {
-		
+
+		private static Assembly EntryAssembly;
+
 		/// <summary>
 		/// Extracts the resource at the given namespace path and returns it as a string
 		/// </summary>
 		public static string GetText(string resourcePath) {
-			var assembly = Assembly.GetEntryAssembly();
-			using (Stream stream = assembly.GetManifestResourceStream(resourcePath)) {
+			if (EntryAssembly == null) {
+				EntryAssembly = Assembly.GetEntryAssembly();
+			}
+			using (Stream stream = EntryAssembly.GetManifestResourceStream(resourcePath)) {
 				using (StreamReader reader = new StreamReader(stream)) {
 					string result = reader.ReadToEnd();
 					return result;
@@ -24,8 +28,10 @@ namespace Jetsons.JetPack {
 		/// Extracts the resource at the given namespace path and returns it as a byte array
 		/// </summary>
 		public static byte[] GetBytes(string resourcePath) {
-			var assembly = Assembly.GetEntryAssembly();
-			using (Stream stream = assembly.GetManifestResourceStream(resourcePath)) {
+			if (EntryAssembly == null) {
+				EntryAssembly = Assembly.GetEntryAssembly();
+			}
+			using (Stream stream = EntryAssembly.GetManifestResourceStream(resourcePath)) {
 				return stream.ToBytes();
 			}
 		}
@@ -36,8 +42,10 @@ namespace Jetsons.JetPack {
 		/// Extracts the resource at the given namespace path and returns it as an Icon
 		/// </summary>
 		public static Icon GetIcon(string resourcePath) {
-			var assembly = Assembly.GetEntryAssembly();
-			using (Stream stream = assembly.GetManifestResourceStream(resourcePath)) {
+			if (EntryAssembly == null) {
+				EntryAssembly = Assembly.GetEntryAssembly();
+			}
+			using (Stream stream = EntryAssembly.GetManifestResourceStream(resourcePath)) {
 				return new Icon(stream);
 			}
 		}
@@ -46,8 +54,10 @@ namespace Jetsons.JetPack {
 		/// Extracts the resource at the given namespace path and returns it as a Bitmap
 		/// </summary>
 		public static Bitmap GetBitmap(string resourcePath) {
-			var assembly = Assembly.GetEntryAssembly();
-			using (Stream stream = assembly.GetManifestResourceStream(resourcePath)) {
+			if (EntryAssembly == null) {
+				EntryAssembly = Assembly.GetEntryAssembly();
+			}
+			using (Stream stream = EntryAssembly.GetManifestResourceStream(resourcePath)) {
 				return new Bitmap(stream);
 			}
 		}
