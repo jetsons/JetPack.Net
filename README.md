@@ -156,10 +156,12 @@ Extension methods for file I/O performed using file path Strings:
 - string.**CopyFile**
 - string.**MoveFile**
 
-Extension methods for file I/O performed using content Strings:
+Extension methods for file I/O performed using content:
 
 - string.**SaveToFile**
 - string.**SaveToTempFile**
+- xmlDoc.**SaveToFile**
+- xmlDoc.**SaveToTempFile**
 
 Extension methods for manipulating HTML snippet Strings:
 
@@ -246,6 +248,12 @@ Extension methods for Colors:
 
 - int.**ToColor**
 - color.**ToInt**
+
+Extension methods for XML objects:
+
+- xmlNode.**Node**
+- xmlNode.**NodeValue**
+- xmlNode.**Attribute**
 
 Extension methods for WinForms Controls:
 
