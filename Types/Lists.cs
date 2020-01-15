@@ -9,6 +9,58 @@ namespace Jetsons.JetPack {
 	public static class Lists {
 
 		/// <summary>
+		/// Checks if the given list exists and has any items in it
+		/// </summary>
+		public static bool Exists(this IList list) {
+			return list != null && list.Count > 0;
+		}
+		/// <summary>
+		/// Checks if the given list exists and has any items in it
+		/// </summary>
+		public static bool Exists<T>(this T[] list) {
+			return list != null && list.Length > 0;
+		}
+		/// <summary>
+		/// Checks if the given list exists and has any items in it
+		/// </summary>
+		public static bool Exists<T>(this IList<T> list) {
+			return list != null && list.Count > 0;
+		}
+
+		/// <summary>
+		/// Checks if the given list exists and has any items in it
+		/// </summary>
+		public static bool Exists<T>(this List<T> list) {
+			return list != null && list.Count > 0;
+		}
+
+		/// <summary>
+		/// Checks if the given list is null or has no items in it
+		/// </summary>
+		public static bool Blank(this IList list) {
+			return list == null && list.Count == 0;
+		}
+		/// <summary>
+		/// Checks if the given list is null or has no items in it
+		/// </summary>
+		public static bool Blank<T>(this T[] list) {
+			return list == null && list.Length == 0;
+		}
+		/// <summary>
+		/// Checks if the given list is null or has no items in it
+		/// </summary>
+		public static bool Blank<T>(this IList<T> list) {
+			return list == null && list.Count == 0;
+		}
+
+		/// <summary>
+		/// Checks if the given list is null or has no items in it
+		/// </summary>
+		public static bool Blank<T>(this List<T> list) {
+			return list == null && list.Count == 0;
+		}
+
+		/// <summary>
 		/// Returns the value of the slot or null if the slot is outside the bounds of the list, instead of throwing an exception
 		/// </summary>
 		public static T Get<T>(this List<T> list, int slot, T defaultValue = default(T)) {
@@ -127,31 +179,6 @@ namespace Jetsons.JetPack {
 			return list;
 		}
 
-		/// <summary>
-		/// Checks if the given list exists and has any items in it
-		/// </summary>
-		public static bool Exists(this IList list) {
-			return list != null && list.Count > 0;
-		}
-		/// <summary>
-		/// Checks if the given list exists and has any items in it
-		/// </summary>
-		public static bool Exists<T>(this T[] list) {
-			return list != null && list.Length > 0;
-		}
-		/// <summary>
-		/// Checks if the given list exists and has any items in it
-		/// </summary>
-		public static bool Exists<T>(this IList<T> list) {
-			return list != null && list.Count > 0;
-		}
-
-		/// <summary>
-		/// Checks if the given list exists and has any items in it
-		/// </summary>
-		public static bool Exists<T>(this List<T> list) {
-			return list != null && list.Count > 0;
-		}
 		/// <summary>
 		/// Converts the given IList to a typed List
 		/// </summary>

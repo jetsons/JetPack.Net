@@ -10,6 +10,46 @@ namespace Jetsons.JetPack {
 	public static class Strings {
 
 		/// <summary>
+		/// Checks if the given string exists and has any characters in it
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="trim">Trim the text before checking if its blank</param>
+		/// <returns></returns>
+		public static bool Exists(this string text, bool trim = false) {
+			if (text != null) {
+				if (trim) {
+
+					// quickly check if any of the chars are non-whitespace
+					// indicating that the string has some content, which is faster
+					// than trimming the text which is a hidden object allocation
+					foreach (var ch in text) {
+						if (!ch.IsWhitespace()) {
+							return true;
+						}
+					}
+					return false;
+				}
+				else {
+					return text.Length > 0;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Checks if the given string is null or has no characters in it
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="trim">Trim the text before checking if its blank</param>
+		/// <returns></returns>
+		public static bool Blank(this string text, bool trim = false) {
+			if (text == null) {
+				return true;
+			}
+			return !Exists(text, trim);
+		}
+
+		/// <summary>
 		/// Returns the alternate value if the string is empty or null
 		/// </summary>
 		/// <param name="text">String to check</param>
@@ -21,24 +61,6 @@ namespace Jetsons.JetPack {
 				return text;
 			}
 			return alternate;
-		}
-
-		/// <summary>
-		/// Checks if the given string exists and has any characters in it
-		/// </summary>
-		/// <param name="text">String to check</param>
-		/// <param name="trim">Trim the text before checking if its blank</param>
-		/// <returns></returns>
-		public static bool Exists(this string text, bool trim = false) {
-			if (text != null) {
-				if (trim) {
-					return text.Trim().Length > 0;
-				}
-				else {
-					return text.Length > 0;
-				}
-			}
-			return false;
 		}
 
 		/// <summary>

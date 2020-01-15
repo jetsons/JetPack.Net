@@ -22,6 +22,7 @@ Extension methods for Strings:
 
 - string.**Or**
 - string.**Exists**
+- string.**Blank**
 - string.**Contains**
 - string.**BeginsWith**
 - string.**EndsWith**
@@ -191,12 +192,13 @@ Extension methods for Lists:
 
 - list.**Get**
 - list.**Set**
+- list.**Exists**
+- list.**Blank**
 - list.**HasSlot**
 - list.**HasSlotAndValue**
 - list.**First**
 - list.**Last**
 - list.**Repeat**
-- list.**Exists**
 - list.**ToList**
 - list.**ToArray**
 - list.**Transpose**
