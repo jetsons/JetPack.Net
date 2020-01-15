@@ -156,47 +156,23 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
-		/// Convert a stream into an array of bytes
-		/// </summary>
-		/// <param name="stream">Input stream</param>
-		/// <returns></returns>
-		public static byte[] ToBytes(this Stream stream) {
-
-			// if its a memory stream
-			if (stream is MemoryStream) {
-
-				// call the platform method
-				var mStream = stream as MemoryStream;
-				return mStream.ToArray();
-
-			}
-			else {
-
-				// rewind to the start of the stream if possible
-				if (stream.CanSeek) {
-					stream.Seek(0, SeekOrigin.Begin);
-				}
-
-				// read from here to the end
-				int count = (int)stream.Length;
-				var bytes = new byte[count];
-				int read, pos = 0;
-				while (pos < count && (read = stream.Read(bytes, pos, count - pos)) > 0) {
-					pos += read;
-				}
-				return bytes;
-
-			}
-		}
-
-		/// <summary>
-		/// Returns true if the given file exists
+		/// Returns true if the given file exists.
 		/// </summary>
 		/// <param name="file">File path</param>
 		/// <returns></returns>
 		public static bool FileExists(this string file) {
-			return file.Exists() && System.IO.File.Exists(file);
+			return file.Exists() && File.Exists(file);
 		}
+
+		/// <summary>
+		/// Returns true if the given file does not exist.
+		/// </summary>
+		/// <param name="file">File path</param>
+		/// <returns></returns>
+		public static bool NoFile(this string file) {
+			return !file.Exists() || !File.Exists(file);
+		}
+
 		/// <summary>
 		/// Deletes a file while supressing any exceptions.
 		/// </summary>
@@ -209,12 +185,21 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
-		/// Returns true if the given folder exists
+		/// Returns true if the given folder exists.
 		/// </summary>
 		/// <param name="folder">Folder path</param>
 		/// <returns></returns>
 		public static bool FolderExists(this string folder) {
 			return folder.Exists() && Directory.Exists(folder);
+		}
+
+		/// <summary>
+		/// Returns true if the given folder does not exist.
+		/// </summary>
+		/// <param name="folder">Folder path</param>
+		/// <returns></returns>
+		public static bool NoFolder(this string folder) {
+			return !folder.Exists() || !Directory.Exists(folder);
 		}
 
 		/// <summary>
@@ -304,7 +289,7 @@ namespace Jetsons.JetPack {
 		/// Modifies the file created date.
 		/// </summary>
 		/// <returns></returns>
-		public static void FileSetCreatedDate(this string path, DateTime date, bool UTC = false) {
+		public static void SetFileCreatedDate(this string path, DateTime date, bool UTC = false) {
 			if (path.FileExists()) {
 				if (UTC) {
 					File.SetCreationTimeUtc(path, date);
@@ -319,7 +304,7 @@ namespace Jetsons.JetPack {
 		/// Modifies the file modified date.
 		/// </summary>
 		/// <returns></returns>
-		public static void FileSetModifiedDate(this string path, DateTime date, bool UTC = false) {
+		public static void SetFileModifiedDate(this string path, DateTime date, bool UTC = false) {
 			if (path.FileExists()) {
 				if (UTC) {
 					File.SetLastWriteTimeUtc(path, date);
