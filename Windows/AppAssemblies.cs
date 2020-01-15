@@ -33,7 +33,8 @@ namespace Jetsons.JetPack {
 
 		/// <summary>
 		/// Register the assembly load handler that takes care of loading
-		/// assemblies from multiple paths and extensions
+		/// assemblies from multiple paths and extensions. This is called internally
+		/// if required otherwise the default .NET handling is used.
 		/// </summary>
 		private static void InitAssemblyHandling() {
 			if (AssemblyPaths == null) {
@@ -80,7 +81,8 @@ namespace Jetsons.JetPack {
 
 		/// <summary>
 		/// Dynamically load a DLL file as a .NET assembly and return the object.
-		/// If the assembly has any dependencies, store them in the same folder as the assembly.
+		/// The assembly is loaded into the current AppDomain, optionally sharing context with it.
+		/// If the assembly has any dependencies, you need to store them in the same folder as the assembly.
 		/// 
 		/// @docurl		https://docs.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading
 		/// </summary>
@@ -107,7 +109,8 @@ namespace Jetsons.JetPack {
 
 		/// <summary>
 		/// Dynamically load a DLL file as a .NET assembly and return all the types contained within.
-		/// If the assembly has any dependencies, store them in the same folder as the assembly.
+		/// The assembly is loaded into the current AppDomain, optionally sharing context with it.
+		/// If the assembly has any dependencies, syou need to tore them in the same folder as the assembly.
 		/// 
 		/// @docurl		https://docs.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading
 		/// </summary>
