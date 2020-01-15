@@ -131,18 +131,22 @@ Extension methods for file I/O performed using file path Strings:
 
 - string.**FileExists**
 - string.**FolderExists**
+- string.**NoFile**
+- string.**NoFolder**
 - string.**EnsureFolderExists**
 - string.**DeleteFolder**
 - string.**EmptyFolder**
 - string.**LoadBytes**
 - string.**LoadTextFile**
+- string.**LoadAssembly**
+- string.**LoadAssemblyTypes**
 - string.**SaveToFile**
 - string.**SaveToTempFile**
 - string.**FileSize**
 - string.**FileCreatedDate**
-- string.**FileSetCreatedDate**
+- string.**SetFileCreatedDate**
 - string.**FileModifiedDate**
-- string.**FileSetModifiedDate**
+- string.**SetFileModifiedDate**
 - string.**GetFilesInDirectory**
 - string.**GetDirectoriesInDirectory**
 - string.**OpenFileInDefaultApp**
