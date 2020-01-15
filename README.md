@@ -141,8 +141,6 @@ Extension methods for file I/O performed using file path Strings:
 - string.**LoadTextFile**
 - string.**LoadAssembly**
 - string.**LoadAssemblyTypes**
-- string.**SaveToFile**
-- string.**SaveToTempFile**
 - string.**FileSize**
 - string.**FileCreatedDate**
 - string.**SetFileCreatedDate**
@@ -157,6 +155,11 @@ Extension methods for file I/O performed using file path Strings:
 - string.**SearchForFiles**
 - string.**CopyFile**
 - string.**MoveFile**
+
+Extension methods for file I/O performed using content Strings:
+
+- string.**SaveToFile**
+- string.**SaveToTempFile**
 
 Extension methods for manipulating HTML snippet Strings:
 
@@ -262,6 +265,11 @@ Extension methods for WinForms RichTextBoxes:
 - **AppResources.GetIcon**
 - **AppResources.GetBitmap**
 - **AppResources.GetBytes**
+
+.NET assemblies:
+
+- **AppAssemblies.RegisterFolder**
+- **AppAssemblies.RegisterExtension**
 
 File handlers:
 
