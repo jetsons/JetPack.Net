@@ -178,8 +178,11 @@ Extension methods for Byte arrays & Streams:
 
 - bytes.**SaveToFile**
 - bytes.**SaveToTempFile**
-- stream.**ToBytes**
+- bytes.**ToStream**
+- bytes.**ToJetArray**
 - stream.**SaveToFile**
+- stream.**ToBytes**
+- stream.**ToJetArray**
 
 Extension methods for Dictionaries & ExpandoObjects:
 
