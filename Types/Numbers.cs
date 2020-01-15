@@ -81,7 +81,7 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Print the byte value in a human-readable form. Eg "25.1 MB" or "53.2 KB".
 		/// 
-		/// Taken from Stackoverflow.
+		/// Original implementation from stackoverflow.
 		/// 
 		/// @url	https://stackoverflow.com/a/14488941/9009598
 		/// @author	JLRishe

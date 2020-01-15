@@ -16,7 +16,7 @@ namespace Jetsons.JetPack {
 	}
 
 	/// <summary>
-	/// Taken from stackoverflow and improved.
+	/// Original implementation from stackoverflow.
 	/// 
 	/// @author		Kirill Osenkov
 	/// @url		https://stackoverflow.com/a/44816953/11170692

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Jetsons.JetPack.Windows {
 
 	/// <summary>
-	/// Taken from Github and improved.
+	/// Original implementation from Github.
 	/// 
 	/// @author		Julien Roncaglia
 	/// @link		https://gist.github.com/vbfox/551626

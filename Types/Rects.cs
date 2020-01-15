@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Jetsons.JetPack {
 	public static class Rects {
-		
+
 		/// <summary>
 		/// Resize this rect to fit within the new size, while maintaining aspect ratio.
 		/// 
@@ -15,7 +15,7 @@ namespace Jetsons.JetPack {
 		///        the other non-null parameter is guaranteed to be constrained to
 		///        its maximum value.
 		///        
-		/// Taken from Stackoverflow and improved.
+		/// Original implementation from stackoverflow.
 		/// 
 		/// @url		https://stackoverflow.com/a/5367895/11170692
 		/// @author		Brian Chavez

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Jetsons.JetPack {
 
 	/// <summary>
-	/// Reflection utils. Implementation taken from stackoverflow and improved.
+	/// Original implementation from stackoverflow.
 	/// 
 	/// @url		https://stackoverflow.com/questions/1196991/get-property-value-from-string-using-reflection-in-c-sharp
 	/// @author		Jason Heddings
