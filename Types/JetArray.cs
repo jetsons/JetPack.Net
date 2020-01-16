@@ -70,7 +70,7 @@ namespace Jetsons.JetPack {
 		/// Create a new JetArray from the given JetArray.
 		/// </summary>
 		public JetArray(JetArray buffer) {
-			stream = new MemoryStream(buffer.ToArray());
+			stream = new MemoryStream(buffer.ToBytes());
 			Setup();
 		}
 
@@ -79,7 +79,7 @@ namespace Jetsons.JetPack {
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString() {
-			return BitConverter.ToString(ToArray()).Replace("-", " ");
+			return BitConverter.ToString(ToBytes()).Replace("-", " ");
 		}
 
 		/// <summary>
@@ -95,7 +95,7 @@ namespace Jetsons.JetPack {
 		/// Append a JetArray to the end of the stream, returning a new JetArray object
 		/// </summary>
 		public JetArray Append(JetArray add, bool posToEnd) {
-			return Append(add.ToArray(), posToEnd);
+			return Append(add.ToBytes(), posToEnd);
 		}
 
 		/// <summary>
@@ -107,7 +107,7 @@ namespace Jetsons.JetPack {
 			uint curPos = Position;
 
 			byte[] resultBuf = new byte[Length + add.Length];
-			byte[] mainBuf = ToArray();
+			byte[] mainBuf = ToBytes();
 			byte[] addBuf = add;
 
 			// do a fast copy
@@ -174,8 +174,20 @@ namespace Jetsons.JetPack {
 		/// This method omits unused bytes in the underlying MemoryStream from the JetArray.
 		/// This method returns a copy of the contents of the underlying MemoryStream as a byte array. 
 		/// </remarks>
-		public byte[] ToArray() {
+		public byte[] ToBytes() {
 			return stream.ToArray();
+		}
+
+		/// <summary>
+		/// Writes the JetArray contents to a new MemoryStream, regardless of the Position property.
+		/// </summary>
+		/// <returns>A new byte array.</returns>
+		/// <remarks>
+		/// This method omits unused bytes in the underlying MemoryStream from the JetArray.
+		/// This method returns a copy of the contents of the underlying MemoryStream as a byte array. 
+		/// </remarks>
+		public MemoryStream ToStream() {
+			return new MemoryStream(stream.ToArray());
 		}
 
 		/// <summary>
@@ -439,7 +451,7 @@ namespace Jetsons.JetPack {
 		/// Writes a stream of bytes to the stream.
 		/// </summary>
 		public void WriteBytes(JetArray buffer) {
-			WriteBytes(buffer.ToArray());
+			WriteBytes(buffer.ToBytes());
 		}
 
 		/// <summary>

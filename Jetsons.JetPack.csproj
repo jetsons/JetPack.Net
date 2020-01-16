@@ -11,7 +11,7 @@
   
    <PropertyGroup>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <PackageId>Jetsons.JetPack</PackageId>
     <Title>Jetsons.Jetpack</Title>
     <Description>The complete extension method library to power your .NET projects. Provides smart extensions for strings, numeric values, math, file management, file paths, URLs, collections and more. Optimized for performance.</Description>
@@ -37,6 +37,10 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <DocumentationFile>bin\Release\net45\Jetsons.JetPack.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Types\JetArray.cs~RF1cb0e4b.TMP" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="System" />

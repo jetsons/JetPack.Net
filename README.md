@@ -323,7 +323,8 @@ Binary stream manipulation:
 - **jetarray[]**
 - **jetarray.Append**
 - **jetarray.Xor**
-- **jetarray.ToArray**
+- **jetarray.ToBytes**
+- **jetarray.ToStream**
 - **jetarray.ReadBytes**
 - **jetarray.WriteBytes**
 - **jetarray.ReadFlags**

@@ -70,11 +70,12 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Save the given string to a temporary file and returns the path
 		/// </summary>
-		/// <param name="buffer">File data</param>
+		/// <param name="text">File content</param>
 		/// <param name="unicode">Save the file as unicode (true) or ANSI (false)</param>
 		/// <param name="codepage">ANSI Codepage to use while reading the file</param>
-		public static string SaveToTempFile(this string text, bool unicode = true, int codepage = 1252) {
-			string path = Path.GetTempPath() + FilePaths.PathSeperator + Path.GetTempFileName();
+		/// <param name="ext">The extension of the new temporary file</param>
+		public static string SaveToTempFile(this string text, bool unicode = true, int codepage = 1252, string ext = "txt") {
+			var path = FilePaths.CreateTempPath(ext);
 			text.SaveToFile(path, false, unicode, codepage);
 			return path;
 		}

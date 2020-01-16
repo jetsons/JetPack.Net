@@ -79,8 +79,9 @@ namespace Jetsons.JetPack {
 		/// Save the given byte array to a temporary file and returns the path
 		/// </summary>
 		/// <param name="buffer">File data</param>
-		public static string SaveToTempFile(this byte[] buffer) {
-			string path = Path.GetTempPath() + FilePaths.PathSeperator + Path.GetTempFileName();
+		/// <param name="ext">The extension of the new temporary file</param>
+		public static string SaveToTempFile(this byte[] buffer, string ext) {
+			var path = FilePaths.CreateTempPath(ext);
 			buffer.SaveToFile(path);
 			return path;
 		}

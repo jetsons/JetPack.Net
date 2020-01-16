@@ -259,5 +259,15 @@ namespace Jetsons.JetPack {
 			} else return path;
 		}
 
+		/// <summary>
+		/// Generates a path to a randomly named file within the user's temporary files folder, and returns the path.
+		/// The format of the file is "guid-guid-guid-guid.ext"
+		/// </summary>
+		/// <returns></returns>
+		public static string CreateTempPath(string ext) {
+			var filename = Guid.NewGuid().ToString().ToLower() + "." + ext;
+			return Path.GetTempPath().AddPath(filename);
+		}
+
 	}
 }
