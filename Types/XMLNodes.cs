@@ -26,13 +26,18 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Returns the value of the first XmlNode of the given type, or the default value if not found
 		/// </summary>
-		public static string NodeValue(this XmlNode node, string type, string defaultValue = null) {
+		public static string NodeValue(this XmlNode node, string type, string defaultValue = null, bool decodeHtml = true) {
 			if (node == null || node.ChildNodes == null) {
 				return defaultValue;
 			}
 			foreach (XmlNode child in node.ChildNodes) {
 				if (child.Name == type) {
-					return child.InnerText.ToString();
+					if (decodeHtml) {
+						return child.InnerText.ToString().DecodeHTML().Trim();
+					}
+					else {
+						return child.InnerText.ToString();
+					}
 				}
 			}
 			return defaultValue;
@@ -41,13 +46,18 @@ namespace Jetsons.JetPack {
 		/// <summary>
 		/// Returns the value of the first attribute with the given name, or the default value if not found
 		/// </summary>
-		public static string Attribute(this XmlNode node, string name, string defaultValue = null) {
+		public static string Attribute(this XmlNode node, string name, string defaultValue = null, bool decodeHtml = true) {
 			if (node == null || node.Attributes == null) {
 				return defaultValue;
 			}
 			foreach (XmlAttribute attrib in node.Attributes) {
 				if (attrib.Name == name) {
-					return attrib.Value.ToString();
+					if (decodeHtml) {
+						return attrib.Value.ToString().DecodeHTML().Trim();
+					}
+					else {
+						return attrib.Value.ToString();
+					}
 				}
 			}
 			return defaultValue;
