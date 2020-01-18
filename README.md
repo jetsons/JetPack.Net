@@ -128,7 +128,7 @@ Extension methods for manipulating file path Strings:
 - string.**AddPath**
 - string.**SetSlash**
 
-Extension methods for file I/O performed using file path Strings:
+Extension methods for file manipulation performed using file path Strings:
 
 - string.**FileExists**
 - string.**FolderExists**
@@ -137,10 +137,6 @@ Extension methods for file I/O performed using file path Strings:
 - string.**EnsureFolderExists**
 - string.**DeleteFolder**
 - string.**EmptyFolder**
-- string.**LoadBytes**
-- string.**LoadTextFile**
-- string.**LoadAssembly**
-- string.**LoadAssemblyTypes**
 - string.**FileSize**
 - string.**FileCreatedDate**
 - string.**SetFileCreatedDate**
@@ -156,23 +152,19 @@ Extension methods for file I/O performed using file path Strings:
 - string.**CopyFile**
 - string.**MoveFile**
 
+Extension methods for file I/O performed using file path Strings:
+
+- string.**LoadBytes**
+- string.**LoadTextFile**
+- string.**LoadAssembly**
+- string.**LoadAssemblyTypes**
+
 Extension methods for file I/O performed using content:
 
 - string.**SaveToFile**
 - string.**SaveToTempFile**
 - xmlDoc.**SaveToFile**
 - xmlDoc.**SaveToTempFile**
-
-Extension methods for manipulating HTML snippet Strings:
-
-- string.**Bold**
-- string.**Italic**
-- string.**Link**
-- string.**Header**
-
-Extension methods for URL Strings:
-
-- string.**DownloadURLToFile**
 
 Extension methods for Byte arrays & Streams:
 
@@ -183,6 +175,22 @@ Extension methods for Byte arrays & Streams:
 - stream.**SaveToFile**
 - stream.**ToBytes**
 - stream.**ToJetArray**
+
+Extension methods for Binary formatting:
+
+- any.**EncodeBinaryFormatted**
+- bytes.**DecodeBinaryFormatted**
+
+Extension methods for URL Strings:
+
+- string.**DownloadURLToFile**
+
+Extension methods for manipulating HTML snippet Strings:
+
+- string.**Bold**
+- string.**Italic**
+- string.**Link**
+- string.**Header**
 
 Extension methods for Dictionaries & ExpandoObjects:
 

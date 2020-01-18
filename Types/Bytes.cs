@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,6 +68,44 @@ namespace Jetsons.JetPack {
 		/// <param name="stream">Input bytes</param>
 		public static MemoryStream ToStream(this byte[] stream) {
 			return new MemoryStream(stream);
+		}
+
+
+		/// <summary>
+		/// Encode an object into data serialized with the .NET Framework BinaryFormatter.
+		/// Supports most object graphs. Returns null if serialization failed.
+		/// </summary>
+		public static byte[] EncodeBinaryFormatted(this object obj) {
+			using (var mem = new MemoryStream()) {
+				using (StreamWriter streamWriter = new StreamWriter(mem)) {
+					BinaryFormatter binaryFormatter = new BinaryFormatter();
+					try {
+						binaryFormatter.Serialize(streamWriter.BaseStream, obj);
+						return mem.ToBytes();
+					}
+					catch (Exception ex) {
+						return null;
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Decode data serialized with the .NET Framework BinaryFormatter into an object.
+		/// Returns null if deserialization failed.
+		/// </summary>
+		public static object DecodeBinaryFormatted(this byte[] obj) {
+			using (var mem = new MemoryStream(obj)) {
+				using (StreamReader streamWriter = new StreamReader(mem)) {
+					BinaryFormatter binaryFormatter = new BinaryFormatter();
+					try {
+						return binaryFormatter.Deserialize(streamWriter.BaseStream);
+					}
+					catch (Exception ex) {
+						return null;
+					}
+				}
+			}
 		}
 
 	}
