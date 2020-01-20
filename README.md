@@ -244,6 +244,9 @@ Extension methods for Numbers:
 - number.**AtMost**
 - number.**Min**
 - number.**Max**
+- number.**GetFlag**
+- number.**SetFlag**
+- number.**ClearFlag**
 - number.**BytesToString**
 - number.**DecimalToHex**
 - string.**HexToDecimal**
