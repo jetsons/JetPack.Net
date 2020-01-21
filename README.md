@@ -16,6 +16,8 @@ Supported platforms:
 - .NET Framework 4.5
 - .NET Standard 2.0
 
+### Addons
+
 If you enjoyed JetPack, check out our add-on libraries that add more flavor and spice!
 
 - [JetPack.Data](https://github.com/jetsons/JetPack.Data.Net) - read and write CSV, JSON, MessagePack and Archive files.
