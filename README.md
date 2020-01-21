@@ -96,6 +96,19 @@ Extension methods for Strings:
 - string.**RestrictToAsciiNumbers**
 - string.**RestrictToFilename**
 
+Extension methods for String Lists:
+
+- list.**Join**
+- list.**SortByLength**
+- list.**EqualsAny**
+- list.**ContainsAny**
+- list.**IndexOfAny**
+- list.**BeginsWithAny**
+- list.**EndsWithAny**
+- list.**ContainsCI**
+- list.**IndexOfCI**
+- list.**LastIndexOfCI**
+
 Extension methods for Characters:
 
 - char.**IsNumber**
