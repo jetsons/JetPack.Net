@@ -1,4 +1,4 @@
-# Jetpack for .NET
+# JetPack for .NET
 
 [![Version](https://img.shields.io/nuget/vpre/Jetsons.JetPack.svg)](https://www.nuget.org/packages/Jetsons.JetPack)
 [![Downloads](https://img.shields.io/nuget/dt/Jetsons.JetPack.svg)](https://www.nuget.org/packages/Jetsons.JetPack)
