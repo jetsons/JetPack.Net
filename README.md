@@ -18,10 +18,10 @@ Supported platforms:
 
 If you enjoyed JetPack, check out our add-on libraries that add more flavor and spice!
 
-- [JetPack.Data](https://github.com/jetsons/JetPack.Data.Net) - smart extension methods to read and write CSV, JSON, MessagePack and Archive files.
-- [JetPack.Office](https://github.com/jetsons/JetPack.Office.Net) - smart extension methods to read and write Word, Excel, PowerPoint and PDF files.
-- [JetPack.Image](https://github.com/jetsons/JetPack.Image.Net) - smart extension methods to read and write PNG, JPG, BMP and ICO images.
-- [JetPack.Text](JetPack.Text.Net) - complete library to convert Word, Excel, PowerPoint and PDF to high quality text.
+- [JetPack.Data](https://github.com/jetsons/JetPack.Data.Net) - read and write CSV, JSON, MessagePack and Archive files.
+- [JetPack.Office](https://github.com/jetsons/JetPack.Office.Net) - read and write Word, Excel, PowerPoint and PDF files.
+- [JetPack.Image](https://github.com/jetsons/JetPack.Image.Net) - read and write PNG, JPG, BMP and ICO images.
+- [JetPack.Text](JetPack.Text.Net) - extract high quality text from Word, Excel, PowerPoint and PDF.
 
 And if you want a similar set of extension methods for your JavaScript and Node.js projects:
 
