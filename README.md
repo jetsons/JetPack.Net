@@ -240,6 +240,7 @@ Extension methods for Numbers:
 - number.**Floor**
 - number.**Snap**
 - number.**Limit**
+- number.**Map**
 - number.**AtLeast**
 - number.**AtMost**
 - number.**Min**
