@@ -202,6 +202,44 @@ namespace Jetsons.JetPack {
 			};
 		}
 
+		/// <summary>
+		/// Checks if the list contains any string matching the given term, using case-insensitive comparison.
+		/// </summary>
+		public static bool ContainsCI(this IList<string> data, string term) {
+			for (int i = 0; i < data.Count; i++) {
+				if (data[i] != null && data[i].EqualsCI(term)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Returns the index of the first string that matches the given term, using case-insensitive comparison.
+		/// If no item is found then it returns -1.
+		/// </summary>
+		public static int IndexOfCI(this IList<string> data, string term) {
+			for (int i = 0; i < data.Count; i++) {
+				if (data[i] != null && data[i].EqualsCI(term)) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		/// <summary>
+		/// Returns the index of the last string that matches the given term, using case-insensitive comparison.
+		/// If no item is found then it returns -1.
+		/// </summary>
+		public static int LastIndexOfCI(this IList<string> data, string term) {
+			for (int i = (data.Count - 1); i >= 0; i--) {
+				if (data[i] != null && data[i].EqualsCI(term)) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
 
 	}
 
