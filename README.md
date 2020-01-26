@@ -258,7 +258,7 @@ Extension methods for Object Lists:
 
 - list.**GetProps**
 
-Extension methods for Numbers:
+Extension methods for Numbers: (`int`, `uint`, `float`, `double`, `long`)
 
 - number.**Round**
 - number.**RoundToDigits**
@@ -288,7 +288,10 @@ Extension methods for Numeric Lists:
 Extension methods for Colors:
 
 - int.**ToColor**
+- uint.**ToColor**
 - color.**ToInt**
+- color.**ToUInt**
+- color.**Blend**
 
 Extension methods for XML objects:
 
