@@ -184,6 +184,7 @@ Extension methods for file I/O performed using file path Strings:
 - string.**LoadTextFile**
 - string.**LoadAssembly**
 - string.**LoadAssemblyTypes**
+- string.**LoadXML**
 
 Extension methods for file I/O performed using content:
 
