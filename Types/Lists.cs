@@ -270,7 +270,7 @@ namespace Jetsons.JetPack {
 		/// <param name="list">List of items</param>
 		/// <param name="index">Index you want to check</param>
 		/// <returns></returns>
-		public static int EnsureValidIndex<T>(this List<T> list, int index) {
+		public static int EnsureValidIndex<T>(this IList<T> list, int index) {
 			int count = list.Count;
 			if (count == 0) {
 				return -1;
@@ -293,7 +293,7 @@ namespace Jetsons.JetPack {
 		/// <param name="endIndex">Index of last element you want (if inclusive is true)</param>
 		/// <param name="inclusive">Return the end index item (true) or not (false)</param>
 		/// <returns></returns>
-		public static List<T> Part<T>(this List<T> list, int startIndex, int endIndex, bool inclusive = true) {
+		public static List<T> Part<T>(this IList<T> list, int startIndex, int endIndex, bool inclusive = true) {
 
 			List<T> result = new List<T>();
 
@@ -347,7 +347,7 @@ namespace Jetsons.JetPack {
 		}
 
 		/// <summary>
-		/// Removes the last item from the list and returns it.
+		/// Shallow clones the list by copying each item to a new list.
 		/// </summary>
 		/// <param name="list">The list to clone. Not modified. Can be null.</param>
 		/// <returns></returns>
@@ -382,6 +382,118 @@ namespace Jetsons.JetPack {
 		public static List<T> RemoveAndReturn<T>(this List<T> list, T item) {
 			list.Remove(item);
 			return list;
+		}
+
+		/// <summary>
+		/// Returns the index of the last occurance of the search term in the list, or -1 if not found.
+		/// </summary>
+		/// <param name="list">The list. Can be null.</param>
+		/// <param name="searchTerm">Item to look for in the list.</param>
+		/// <returns></returns>
+		public static int LastIndexOf<T>(this IList<T> list, T searchTerm) {
+			if (list == null || list.Count == 0) {
+				return -1;
+			}
+			for (int i = list.Count - 1; i >= 0; i--) {
+				if (EqualityComparer<T>.Default.Equals(list[i], searchTerm)) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		/// <summary>
+		/// Returns a new list with the items before the given index
+		/// </summary>
+		/// <param name="list">The list. Can be null.</param>
+		/// <param name="index">Item index</param>
+		/// <param name="inclusive">Return the text including the given char index, or excluding it?</param>
+		/// <returns>Never returns null. Always returns a new list. The input list is never returned.</returns>
+		public static List<T> BeforeIndex<T>(this IList<T> list, int index = 0, bool inclusive = false) {
+			if (list == null || index < 0) {
+				return new List<T>();
+			}
+			if (index > list.Count) {
+				return list.ShallowClone();
+			}
+			return inclusive ? list.Part(0, index) : list.Part(0, index - 1);
+		}
+
+		/// <summary>
+		/// Returns a new list with the items after the given index
+		/// </summary>
+		/// <param name="list">The list. Can be null.</param>
+		/// <param name="index">Item index</param>
+		/// <param name="inclusive">Return the text including the given char index, or excluding it?</param>
+		/// <returns>Never returns null. Always returns a new list. The input list is never returned.</returns>
+		public static List<T> AfterIndex<T>(this IList<T> list, int index = 0, bool inclusive = false) {
+			if (list == null || index > list.Count) {
+				return new List<T>();
+			}
+			if (index < 0) {
+				return list.ShallowClone();
+			}
+			return inclusive ? list.Part(index, list.Count - 1) : list.Part(index + 1, list.Count - 1);
+		}
+
+		/// <summary>
+		/// Returns a new list with the items after the *first* occurrence of the search term
+		/// </summary>
+		/// <param name="list">The list. Can be null.</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns>Never returns null. Always returns a new list. The input list is never returned.</returns>
+		public static List<T> After<T>(this IList<T> list, T searchTerm, bool returnAll = true) {
+			int start = list.IndexOf(searchTerm);
+			if (start == -1) {
+				return returnAll ? list.ShallowClone() : new List<T>();
+			}
+			return list.Part(start + 1, list.Count - 1);
+		}
+
+		/// <summary>
+		/// Returns a new list with the items after the *last* occurence of the search term
+		/// </summary>
+		/// <param name="list">The list. Can be null.</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns>Never returns null. Always returns a new list. The input list is never returned.</returns>
+		public static List<T> AfterLast<T>(this IList<T> list, T searchTerm, bool returnAll = true) {
+			int start = list.LastIndexOf(searchTerm);
+			if (start == -1) {
+				return returnAll ? list.ShallowClone() : new List<T>();
+			}
+			return list.Part(start + 1, list.Count - 1);
+		}
+
+		/// <summary>
+		/// Returns a new list with the items before the *first* occurrence of the search term
+		/// </summary>
+		/// <param name="list">The list. Can be null.</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns>Never returns null. Always returns a new list. The input list is never returned.</returns>
+		public static List<T> Before<T>(this IList<T> list, T searchTerm, bool returnAll = true) {
+			int start = list.IndexOf(searchTerm);
+			if (start == -1) {
+				return returnAll ? list.ShallowClone() : new List<T>();
+			}
+			return list.Part(0, start - 1);
+		}
+
+		/// <summary>
+		/// Returns a new list with the items before the *last* occurrence of the search term
+		/// </summary>
+		/// <param name="list">The list. Can be null.</param>
+		/// <param name="searchTerm">Search term, not included in result</param>
+		/// <param name="returnAll">If search term is not found, return all or nothing?</param>
+		/// <returns>Never returns null. Always returns a new list. The input list is never returned.</returns>
+		public static List<T> BeforeLast<T>(this IList<T> list, T searchTerm, bool returnAll = true) {
+			int start = list.LastIndexOf(searchTerm);
+			if (start == -1) {
+				return returnAll ? list.ShallowClone() : new List<T>();
+			}
+			return list.Part(0, start - 1);
 		}
 
 	}

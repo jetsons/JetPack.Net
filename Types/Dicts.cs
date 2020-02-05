@@ -149,5 +149,76 @@ namespace Jetsons.JetPack {
 			return dict.GetProp(propertyOrPath);
 		}
 
+		/// <summary>
+		/// Creates a dictionary by indexing the given object by a certain property or field.
+		/// This method assumes that key values are unique.
+		/// If the same key value is encountered multiple times, the last object is indexed in the dictionary.
+		/// </summary>
+		/// <typeparam name="TKey">The type of the keyProp</typeparam>
+		/// <typeparam name="TItem">The type of the items in the list</typeparam>
+		/// <param name="items">The list to convert.</param>
+		/// <param name="keyPropOrPath">Property name or dot-path of the property</param>
+		/// <returns>Never returns null. Returns a blank dictionary if none of the objects have key values.</returns>
+		public static Dictionary<TKey, TItem> IndexByUniqueKey<TKey, TItem>(this IList<TItem> items, string keyPropOrPath) {
+			var result = new Dictionary<TKey, TItem>();
+			foreach (var item in items) {
+				TKey key = item.GetPropValue<TKey>(keyPropOrPath);
+				if (key != null) {
+					result.SetProp(key, item);
+				}
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Creates a dictionary by indexing the given object by a certain property or field.
+		/// This method allows for non-unique key values.
+		/// All the objects with a given key are listed in the dictionary.
+		/// </summary>
+		/// <typeparam name="TKey">The type of the keyProp</typeparam>
+		/// <typeparam name="TItem">The type of the items in the list</typeparam>
+		/// <param name="items">The list to convert.</param>
+		/// <param name="keyPropOrPath">Property name or dot-path of the property</param>
+		/// <returns>Never returns null. Returns a blank dictionary if none of the objects have key values.</returns>
+		public static Dictionary<TKey, List<TItem>> IndexByNonUniqueKey<TKey, TItem>(this IList<TItem> items, string keyPropOrPath) {
+			var result = new Dictionary<TKey, List<TItem>>();
+			foreach (var item in items) {
+				TKey key = item.GetPropValue<TKey>(keyPropOrPath);
+				if (key != null) {
+					if (result.ContainsKey(key)) {
+						result[key].Add(item);
+					}
+					else {
+						result.Add(key, new List<TItem> { item });
+					}
+				}
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Creates a dictionary of all the keys and marks a flag against the key.
+		/// Useful to mark which keys are encountered in the object.
+		/// </summary>
+		/// <typeparam name="TKey">The type of the keyProp</typeparam>
+		/// <typeparam name="TItem">The type of the items in the list</typeparam>
+		/// <typeparam name="TFlag">The type of the flag value</typeparam>
+		/// <param name="items">The list to convert.</param>
+		/// <param name="keyPropOrPath">Property name or dot-path of the property</param>
+		/// <param name="flag">Flag to store against the key</param>
+		/// <returns>Never returns null. Returns a blank dictionary if none of the objects have key values.</returns>
+		public static Dictionary<TKey, TFlag> IndexByFlags<TKey, TItem, TFlag>(this IList<TItem> items, string keyPropOrPath, TFlag flag) {
+			var result = new Dictionary<TKey, TFlag>();
+			foreach (var item in items) {
+				TKey key = item.GetPropValue<TKey>(keyPropOrPath);
+				if (key != null) {
+					if (!result.ContainsKey(key)) {
+						result.Add(key, flag);
+					}
+				}
+			}
+			return result;
+		}
+
 	}
 }

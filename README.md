@@ -241,6 +241,7 @@ Extension methods for Lists:
 - list.**HasSlotAndValue**
 - list.**First**
 - list.**Last**
+- list.**LastIndexOf**
 - list.**Repeat**
 - list.**ToList**
 - list.**ToArray**
@@ -249,11 +250,20 @@ Extension methods for Lists:
 - list.**AddOnce**
 - list.**EnsureValidIndex**
 - list.**Part**
+- list.**BeforeIndex**
+- list.**AfterIndex**
+- list.**Before**
+- list.**After**
+- list.**BeforeLast**
+- list.**AfterLast**
 - list.**RemoveFirst**
 - list.**RemoveLast**
 - list.**ShallowClone**
 - list.**AddAndReturn**
 - list.**RemoveAndReturn**
+- list.**IndexByUniqueKey**
+- list.**IndexByNonUniqueKey**
+- list.**IndexByFlags**
 
 Extension methods for Object Lists:
 
