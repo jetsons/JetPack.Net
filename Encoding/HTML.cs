@@ -44,8 +44,9 @@ namespace Jetsons.JetPack {
 				else {
 					if (c > 127 && c < 0x10000) {
 						// value needs to be encoded
-						sb.Append("\\u");
-						sb.Append(((int)c).ToString("x4"));
+						sb.Append("&#");
+						sb.Append((int)c);
+						sb.Append(";");
 					}
 					else {
 
