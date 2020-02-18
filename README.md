@@ -177,6 +177,7 @@ Extension methods for file manipulation performed using file path Strings:
 - string.**SearchForFiles**
 - string.**CopyFile**
 - string.**MoveFile**
+- string.**DeleteFile**
 
 Extension methods for file I/O performed using file path Strings:
 
@@ -242,6 +243,9 @@ Extension methods for Lists:
 - list.**First**
 - list.**Last**
 - list.**LastIndexOf**
+- list.**Replace**
+- list.**ReplaceFirst**
+- list.**ReplaceLast**
 - list.**Repeat**
 - list.**ToList**
 - list.**ToArray**

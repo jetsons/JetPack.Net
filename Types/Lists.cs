@@ -496,5 +496,53 @@ namespace Jetsons.JetPack {
 			return list.Part(0, start - 1);
 		}
 
+		/// <summary>
+		/// Replaces the *first* occurrence of the search term with the given value.
+		/// Returns the index of the occurance, or -1 if it was not found.
+		/// </summary>
+		/// <param name="list">The list. Cannot be null.</param>
+		/// <param name="searchTerm">Search term</param>
+		/// <param name="replaceTerm">If search term is not found, it is replaced with this</param>
+		public static int ReplaceFirst<T>(this IList<T> list, T searchTerm, T replaceTerm) {
+			int index = list.IndexOf(searchTerm);
+			if (index > -1) {
+				list[index] = replaceTerm;
+			}
+			return index;
+		}
+
+		/// <summary>
+		/// Replaces the *last* occurrence of the search term with the given value.
+		/// Returns the index of the occurance, or -1 if it was not found.
+		/// </summary>
+		/// <param name="list">The list. Cannot be null.</param>
+		/// <param name="searchTerm">Search term</param>
+		/// <param name="replaceTerm">If search term is not found, it is replaced with this</param>
+		public static int ReplaceLast<T>(this IList<T> list, T searchTerm, T replaceTerm) {
+			int index = list.LastIndexOf(searchTerm);
+			if (index > -1) {
+				list[index] = replaceTerm;
+			}
+			return index;
+		}
+
+		/// <summary>
+		/// Replaces all the occurrences of the search term with the given value.
+		/// Returns the number of times replaced, or 0 if it was not found.
+		/// </summary>
+		/// <param name="list">The list. Cannot be null.</param>
+		/// <param name="searchTerm">Search term</param>
+		/// <param name="replaceTerm">If search term is not found, it is replaced with this</param>
+		public static int Replace<T>(this IList<T> list, T searchTerm, T replaceTerm) {
+			int count = 0;
+			for (int i = 0; i < list.Count; i++) {
+				if (EqualityComparer<T>.Default.Equals(list[i], searchTerm)) {
+					count++;
+					list[i] = replaceTerm;
+				}
+			}
+			return count;
+		}
+
 	}
 }
