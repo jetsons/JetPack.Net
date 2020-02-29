@@ -179,17 +179,41 @@ namespace Jetsons.JetPack {
 		/// <typeparam name="TItem">The type of the items in the list</typeparam>
 		/// <param name="items">The list to convert.</param>
 		/// <param name="keyPropOrPath">Property name or dot-path of the property</param>
+		/// <param name="isPropList">Does the property hold a list of keys (true) or a scalar key (false)</param>
 		/// <returns>Never returns null. Returns a blank dictionary if none of the objects have key values.</returns>
-		public static Dictionary<TKey, List<TItem>> IndexByNonUniqueKey<TKey, TItem>(this IList<TItem> items, string keyPropOrPath) {
+		public static Dictionary<TKey, List<TItem>> IndexByNonUniqueKey<TKey, TItem>(this IList<TItem> items, string keyPropOrPath, bool isPropList = false) {
 			var result = new Dictionary<TKey, List<TItem>>();
+
+			// per item in the list
 			foreach (var item in items) {
-				TKey key = item.GetPropValue<TKey>(keyPropOrPath);
-				if (key != null) {
-					if (result.ContainsKey(key)) {
-						result[key].Add(item);
+				if (isPropList) {
+
+					// if the property holds a list of keys
+					IList<TKey> keys = item.GetPropValue<IList<TKey>>(keyPropOrPath);
+					if (keys != null) {
+						foreach (TKey key in keys) {
+							if (key != null) {
+								if (result.ContainsKey(key)) {
+									result[key].Add(item);
+								}
+								else {
+									result.Add(key, new List<TItem> { item });
+								}
+							}
+						}
 					}
-					else {
-						result.Add(key, new List<TItem> { item });
+				}
+				else {
+
+					// if the property holds a scalar key
+					TKey key = item.GetPropValue<TKey>(keyPropOrPath);
+					if (key != null) {
+						if (result.ContainsKey(key)) {
+							result[key].Add(item);
+						}
+						else {
+							result.Add(key, new List<TItem> { item });
+						}
 					}
 				}
 			}
