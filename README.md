@@ -56,10 +56,14 @@ Extension methods for Strings:
 - string.**ToCamelCase**
 - string.**SplitCamelCase**
 - string.**LineCount**
-- string.**RemovePrefix**
-- string.**RemovePostfix**
 - string.**Prefix**
 - string.**Postfix**
+- string.**RemovePrefix**
+- string.**RemovePostfix**
+- string.**ReplacePrefix**
+- string.**ReplacePostfix**
+- string.**CountPrefix**
+- string.**CountPostfix**
 - string.**EqualsCI**
 - string.**BeginsWithCI**
 - string.**EndsWithCI**
@@ -86,8 +90,6 @@ Extension methods for Strings:
 - string.**Truncate**
 - string.**Repeat**
 - string.**Part**
-- string.**CountPrefix**
-- string.**CountPostfix**
 - string.**WebSafeFilename**
 - string.**EnsureValidIndex**
 - string.**RestrictToURLComponent**

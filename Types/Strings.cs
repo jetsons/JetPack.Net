@@ -1269,6 +1269,36 @@ namespace Jetsons.JetPack {
 			return result.ToString();
 		}
 
+		/// <summary>
+		/// Checks if the string begins with the given prefix and replaces it with the given value, otherwise no changes are done.
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="find">Prefix to find</param>
+		/// <param name="replace">Prefix to replace it with</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static string ReplacePrefix(this string text, string find, string replace, bool caseSensitive = true) {
+			if (find.Exists() && text.BeginsWith(find, caseSensitive)) {
+				return replace + text.Substring(find.Length);
+			}
+			return text;
+		}
+
+		/// <summary>
+		/// Checks if the string begins with the given postfix and replaces it with the given value, otherwise no changes are done.
+		/// </summary>
+		/// <param name="text">String to check</param>
+		/// <param name="find">Postfix to find</param>
+		/// <param name="replace">Postfix to replace it with</param>
+		/// <param name="caseSensitive">Use case sensitive search?</param>
+		/// <returns></returns>
+		public static string ReplacePostfix(this string text, string find, string replace, bool caseSensitive = true) {
+			if (find.Exists() && text.EndsWith(find, caseSensitive)) {
+				return text.RemovePostfix(find) + replace;
+			}
+			return text;
+		}
+
 	}
 
 	/// <summary>
